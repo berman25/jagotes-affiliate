@@ -21,7 +21,8 @@ class AffiliateUser extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'referral_code'
     ];
 
     /**

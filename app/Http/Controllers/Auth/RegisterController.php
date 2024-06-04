@@ -51,6 +51,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'referral_code' => ['required', 'string', 'max:255', 'unique:affiliate_users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:affiliate_users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -66,6 +67,7 @@ class RegisterController extends Controller
     {
         return AffiliateUser::create([
             'name' => $data['name'],
+            'referral_code' => $data['referral_code'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
