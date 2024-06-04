@@ -78,18 +78,27 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="https://ui-avatars.com/api/?name={{auth()->user()->name}}&background=1F2855&color=fff" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->name}}</span>
+            @if (auth()->check())
+              <img src="https://ui-avatars.com/api/?name={{auth()->user()->name}}&background=1F2855&color=fff" alt="Profile" class="rounded-circle">
+              <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->name}}</span>
+            @endif
+            
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             
             
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                
               </a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+              </form>
             </li>
 
           </ul><!-- End Profile Dropdown Items -->
