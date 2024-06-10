@@ -12,13 +12,14 @@
                     <div class="d-flex align-items-center">
                         
                         <div class="ps-3">
-                            <span class="text-muted small pt-2 ps-1">https://mylink.kliktes.com/u/{{auth()->user()->referral_code}}</span>
+                          <span class="text-muted small pt-2 ps-1">https://demo.kliktes.com/</span>
+                            {{-- <span class="text-muted small pt-2 ps-1">https://mylink.kliktes.com/u/{{auth()->user()->referral_code}}</span>
                             <ul>
                               <li class="text-muted small pt-2 ps-1">https://portal-cpns.jagotes.id/register?code={{auth()->user()->referral_code}}</li>
                               <li class="text-muted small pt-2 ps-1">https://portal-pppk.jagotes.id/register?code={{auth()->user()->referral_code}}</li>
                               <li class="text-muted small pt-2 ps-1">https://portal-kedinasan.goptn.id/register?code={{auth()->user()->referral_code}}</li>
                               <li class="text-muted small pt-2 ps-1">https://portal-bumn.jagotes.id/register?code={{auth()->user()->referral_code}}</li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </div>
 
