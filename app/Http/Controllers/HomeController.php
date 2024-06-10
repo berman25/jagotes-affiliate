@@ -17,8 +17,16 @@ class HomeController extends Controller
         $pendaftar = app('App\Http\Controllers\DataController')->getPendaftarCount(null, \Carbon\Carbon::today());
         $sales = app('App\Http\Controllers\DataController')->getSalesCount(null, \Carbon\Carbon::today());
         $komisi = app('App\Http\Controllers\DataController')->getKomisi(null, \Carbon\Carbon::today());
+        if(auth()->user()->role == 'partner'){
+            $sites = \DB::table('multi_tenant_sites')
+                        ->where('organization', auth()->user()->organization)
+                        ->select('domain_1')
+                        ->get();
+        }else{
+            $sites = null;
+        }
 
-        return view('home')->with(compact('pendaftar', 'sales', 'komisi'));
+        return view('home')->with(compact('pendaftar', 'sales', 'komisi', 'sites'));
     }
 
     public function pendaftar(Request $request)
