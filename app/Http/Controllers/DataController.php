@@ -39,6 +39,7 @@ class DataController extends Controller
         $data = \DB::table('transactions')
                 ->join('users', 'transactions.user_id', 'users.user_id')
                 ->where([$this->q])
+                ->where('amount', '>', 0)
                 ->whereNotNull('paid_at')
                 // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
                 ->count();
@@ -52,6 +53,7 @@ class DataController extends Controller
                 ->join('users', 'transactions.user_id', 'users.user_id')
                 ->where([$this->q])
                 ->whereNotNull('paid_at')
+                ->where('amount', '>', 0)
                 // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
                 ->selectRaw('users.user_id, user_name, telp, email, amount, paid_at')
                 ->get();
