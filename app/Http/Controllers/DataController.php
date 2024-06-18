@@ -68,6 +68,6 @@ class DataController extends Controller
                 // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
                 ->sum('amount');
 
-        return $data*0.3;
+        return $data*auth()->user()->commission /100;
     }
 }
