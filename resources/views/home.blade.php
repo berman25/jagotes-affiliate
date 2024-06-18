@@ -22,6 +22,7 @@
                             <ul>
                               <li class="text-muted small pt-2 ps-1">https://portal-cpns.jagotes.id/register?code={{auth()->user()->referral_code}}</li>
                               <li class="text-muted small pt-2 ps-1">https://portal-pppk.jagotes.id/register?code={{auth()->user()->referral_code}}</li>
+                              <li class="text-muted small pt-2 ps-1">https://portal-kedinasan.jagotes.id/register?code={{auth()->user()->referral_code}}</li>
                             </ul>
                           @endif                         
                             
