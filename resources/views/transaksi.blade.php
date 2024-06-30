@@ -36,7 +36,7 @@
                                 <td>{{$item->telp}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>@money($item->amount)</td>
-                                <td>@money($item->fee_amount) <br><span class="badge badge-primary">{{$item->payment_channel}}</span></td>
+                                <td>@money($item->fee_amount) <br><span class="badge bg-primary">{{$item->payment_channel}}</span></td>
                                 <td>{{$item->paid_at}}</td>
                             </tr>
                         @endforeach
