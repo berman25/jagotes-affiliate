@@ -24,7 +24,8 @@
                                 <th>Nama</th>
                                 <th>Telp</th>
                                 <th>Email</th>                                
-                                <th>Jumlah Pembayaran</th>   
+                                <th>Jumlah Pembayaran</th>
+                                <th>Potongan PG</th>
                                 <th>Tanggal Pembayaran</th>                 
                             </tr>
                         </thead>
@@ -35,6 +36,7 @@
                                 <td>{{$item->telp}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>@money($item->amount)</td>
+                                <td>@money($item->fee_amount)</td>
                                 <td>{{$item->paid_at}}</td>
                             </tr>
                         @endforeach
