@@ -55,7 +55,7 @@ class DataController extends Controller
                 ->whereNotNull('paid_at')
                 ->where('amount', '>', 0)
                 // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
-                ->selectRaw('users.user_id, user_name, telp, email, amount, fee_amount, paid_at')
+                ->selectRaw('users.user_id, user_name, telp, email, amount, fee_amount, payment_channel, paid_at')
                 ->get();
 
         return $data;
