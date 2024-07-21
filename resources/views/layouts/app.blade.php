@@ -28,6 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  @yield('css')
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -122,22 +123,35 @@
       </li><!-- End Dashboard Nav -->
 
 
-      <li class="nav-heading">Data Table</li>      
+      <li class="nav-heading">Menu Utama</li>      
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('pendaftar')}}">
-          <i class="bi bi-card-list"></i>
+          <i class="bi bi-people"></i>
           <span>Pendaftar</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('transaksi')}}">
-          <i class="bi bi-box-arrow-in-right"></i>
+          <i class="bi bi-cash-coin"></i>
           <span>Transaksi</span>
         </a>
-      </li><!-- End Login Page Nav -->     
+      </li>  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('saldo')}}">
+          <i class="bi bi-wallet"></i>
+          <span>Saldo</span>
+        </a>
+      </li>
 
+      {{-- <li class="nav-heading">Konfigurasi</li> 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('account-setting')}}">
+          <i class="bi bi-gear"></i>
+          <span>Pengaturan Akun</span>
+        </a>
+      </li> --}}
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -151,6 +165,7 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <script src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -162,7 +177,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  @yield('js')
 </body>
 
 </html>
