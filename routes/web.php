@@ -22,7 +22,17 @@ Route::get('/u/{referral_code}', function ($referral_code) {
 
         return view('linktree')->with(compact('user')); 
 });
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/pendaftar', [App\Http\Controllers\HomeController::class, 'pendaftar'])->name('pendaftar');
-Route::get('/transaksi', [App\Http\Controllers\HomeController::class, 'transaksi'])->name('transaksi');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/pendaftar', [App\Http\Controllers\HomeController::class, 'pendaftar'])->name('pendaftar');
+    Route::get('/transaksi', [App\Http\Controllers\HomeController::class, 'transaksi'])->name('transaksi');
+    Route::get('/saldo', [App\Http\Controllers\HomeController::class, 'saldo'])->name('saldo');
+    Route::get('/account-setting', [App\Http\Controllers\HomeController::class, 'accountSetting'])->name('account-setting');
+    
+    Route::post('/email-verification', [App\Http\Controllers\UserController::class, 'emailVerification'])->name('email-verification');
+    Route::post('/add-bank-account', [App\Http\Controllers\UserController::class, 'AddBankAccount'])->name('add-bank-account');
+    Route::get('/get-bank-account', [App\Http\Controllers\UserController::class, 'GetBankAccount'])->name('get-bank-account');
+    Route::post('/withdrawal', [App\Http\Controllers\UserController::class, 'withdrawal'])->name('withdrawal');
+    
+});
