@@ -39,7 +39,7 @@
 
             <div class="card info-card customers-card">
                 <div class="card-body">
-                    <h5 class="card-title">Pendaftar </h5>
+                    <h5 class="card-title">Total Pendaftar </h5>
 
                     <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -61,7 +61,7 @@
         <div class="col-xxl-4 col-md-6">
             <div class="card info-card sales-card">
               <div class="card-body">
-                <h5 class="card-title">Penjualan</h5>
+                <h5 class="card-title">Total Penjualan</h5>
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -81,7 +81,7 @@
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="card-body">
-                <h5 class="card-title">Komisi</h5>
+                <h5 class="card-title">Total Komisi</h5>
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
