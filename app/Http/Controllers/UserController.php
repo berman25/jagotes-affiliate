@@ -8,8 +8,14 @@ class UserController extends Controller
 {
     public function emailVerification(Request $request)
     {
-        $otp = rand(1111, 9999);
-        $id = 1;
+        if(!auth()->user()->otp){
+            $otp = rand(1111, 9999);
+        }else{
+            $otp = auth()->user()->otp;
+        }       
+
+        $id = auth()->id();
+
         \DB::table('affiliate_users')
             ->where('id', auth()->id())
             ->update([
