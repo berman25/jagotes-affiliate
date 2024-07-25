@@ -17,7 +17,7 @@ class UserController extends Controller
                 'email_verification' => $request->email
             ]);
 
-        $countdown = 60;
+        $cooldown = 60;
         $client = new \GuzzleHttp\Client();
         $res = $client->post("https://api.rasionalisasi.com/api/affiliator/account-verification/$id");
 
