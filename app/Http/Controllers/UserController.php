@@ -21,7 +21,7 @@ class UserController extends Controller
         $client = new \GuzzleHttp\Client();
         $res = $client->post("https://api.rasionalisasi.com/api/affiliator/account-verification/$id");
 
-        return redirect()->back()->with(compact('countdown'));
+        return redirect()->back()->with(compact('cooldown'));
     }
 
     public function verifyEmail(Request $request)
