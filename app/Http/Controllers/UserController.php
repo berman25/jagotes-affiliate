@@ -44,7 +44,7 @@ class UserController extends Controller
             return "akun sudah diverifikasi";
         }
 
-        if($user->email_verification == $request->email_verification && $user->otp == $request->otp){
+        if($user->email_verification == $request->email && $user->otp == $request->otp){
             \DB::table('affiliate_users')
                 ->where('id', $request->user_id)
                 ->update([
