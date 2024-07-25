@@ -8,13 +8,20 @@ class UserController extends Controller
 {
     public function emailVerification(Request $request)
     {
+        $otp = rand(1111, 9999);
+        $id = 1;
         \DB::table('affiliate_users')
             ->where('id', auth()->id())
             ->update([
+                'otp' => $otp,
                 'email_verification' => $request->email
             ]);
 
-        return redirect()->back();
+        $countdown = 60;
+        $client = new \GuzzleHttp\Client();
+        $res = $client->post("https://api.rasionalisasi.com/api/affiliator/account-verification/$id");
+
+        return redirect()->back()->with(compact('countdown'));
     }
 
     public function verifyEmail(Request $request)

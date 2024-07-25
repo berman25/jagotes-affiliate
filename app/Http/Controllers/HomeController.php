@@ -65,6 +65,7 @@ class HomeController extends Controller
     public function accountSetting(Request $request)
     {
         $data = auth()->user();
-        return view('account')->with(compact('data'));
+        $cooldown = 0;
+        return view('account')->with(compact('data','cooldown'));
     }
 }

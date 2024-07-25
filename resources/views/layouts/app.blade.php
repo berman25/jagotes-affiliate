@@ -145,13 +145,13 @@
         </a>
       </li>
 
-      {{-- <li class="nav-heading">Konfigurasi</li> 
+      <li class="nav-heading">Konfigurasi</li> 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('account-setting')}}">
           <i class="bi bi-gear"></i>
           <span>Pengaturan Akun</span>
         </a>
-      </li> --}}
+      </li>
     </ul>
 
   </aside><!-- End Sidebar-->

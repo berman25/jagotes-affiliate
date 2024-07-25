@@ -16,23 +16,23 @@
         <div class="col-xxl-4 col-xl-12">
             <div class="card">
                 <div class="card-body">                    
-                    <h5 class="card-title">Verifikasi Email</h5>
-                    @if (!$data->email_verification)
+                    <h5 class="card-title">Verifikasi Email</h5>                    
                     <form action="{{route('email-verification')}}" method="POST">
                         @csrf
                         <div class="row">                        
                             <div class="col-xs-12 col-sm-12 col-md-12 mt-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required>                            
+                                <input type="email" name="email" class="form-control" required value="{{$data->email_verification}}">                            
                             </div>                       
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center mt-3">
-                                <button type="submit" class="btn btn-primary">Request kode verifikasi</button>
+                                <button type="submit" class="btn btn-primary" id="cd">Request kode verifikasi</button>
                             </div>
                         </div>
                     </form>
-                    @else
-                    <p id="otpVerificationForm">Link verifikasi sudah dikirimkan ke email <span id="email" class="text-danger">{{$data->email_verification}}</span></p>
-                    @endif
+                    @if ($data->email_verification)
+                        <p id="otpVerificationForm">Link verifikasi sudah dikirimkan ke email <span id="email" class="text-danger">{{$data->email_verification}}.</span>
+                        Request ulang dapat dilakukan dalam <span id="timer">0</span> detik</p>                    
+                    @endif                    
                 </div>
             </div>
         </div>
@@ -40,8 +40,8 @@
         <div class="col-xxl-4 col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Profil Anda</h5>
-                    <div class="row">
+                    <h5 class="card-title">Akun Anda sudah terverifikasi</h5>
+                    {{-- <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <label class="form-label">Nama Akun</label>
                             <input type="text" name="name" class="form-control" value="{{$data->name}}" disabled>                            
@@ -50,11 +50,11 @@
                             <label class="form-label">Email</label>
                             <input type="text" name="telp" class="form-control" value="{{$data->email}}" disabled>                            
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
-        <div class="col-xxl-4 col-xl-12">
+        {{-- <div class="col-xxl-4 col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Rekening</h5>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         @endif
         
         
@@ -118,6 +118,22 @@
             });
         }
     })
+
+    if({{$cooldown}}){
+        document.getElementById("cd").disabled = true;        
+        distance = 20;
+        var x = setInterval(function() {
+            
+            document.getElementById("timer").innerHTML = distance;
+            distance = distance - 1;
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("cd").disabled = false;
+            }
+
+        }, 1000);
+    }
+    
 
     
 </script>
