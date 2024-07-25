@@ -27,7 +27,7 @@ class UserController extends Controller
             return "akun tidak ditemukan";
         }
 
-        if(!$user->email_verify_at){
+        if($user->email_verify_at){
             return "akun sudah diverifikasi";
         }
 
@@ -37,7 +37,7 @@ class UserController extends Controller
                 ->update([
                     'email_verify_at' => \Carbon\Carbon::now()
                 ]);
-                
+
             return "akun kamu berhasil diverifikasi";
         }else{
             return "akun kamu gagal diverifikasi";
