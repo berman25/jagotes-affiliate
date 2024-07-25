@@ -36,3 +36,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/withdrawal', [App\Http\Controllers\UserController::class, 'withdrawal'])->name('withdrawal');
     
 });
+
+Route::get('/account-verification', [App\Http\Controllers\UserController::class, 'verifyEmail']);

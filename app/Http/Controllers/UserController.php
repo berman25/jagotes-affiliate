@@ -17,6 +17,33 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function verifyEmail(Request $request)
+    {
+        $user = \DB::table('affiliate_users')
+            ->where('id', $request->user_id)
+            ->first();
+
+        if(!$user){
+            return "akun tidak ditemukan";
+        }
+
+        if(!$user->email_verify_at){
+            return "akun sudah diverifikasi";
+        }
+
+        if($user->email_verification == $request->email_verification && $user->otp == $request->otp){
+            \DB::table('affiliate_users')
+                ->where('id', $request->user_id)
+                ->update([
+                    'email_verify_at' => \Carbon\Carbon::now()
+                ]);
+                
+            return "akun kamu berhasil diverifikasi";
+        }else{
+            return "akun kamu gagal diverifikasi";
+        }
+    }
+
     public function AddBankAccount(Request $request)
     {
         \App\Models\AffiliateBankAccount
