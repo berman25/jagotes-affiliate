@@ -9,7 +9,7 @@ class DataController extends Controller
     public function __construct()
     {
         if(auth()->user()->role == 'partner'){
-            $this->q = ['tenant', '=', auth()->user()->organization];
+            $this->q = ['tenant_organization', '=', auth()->user()->organization];
         }else{
             $this->q = ['referenced_by', '=', auth()->user()->referral_code];
         }
