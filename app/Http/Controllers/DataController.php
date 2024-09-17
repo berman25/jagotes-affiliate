@@ -67,14 +67,23 @@ class DataController extends Controller
 
     public function getKomisi($start_date='2024-01-01', $end_date)
     {
-        $data = \DB::table('transactions')
+        $subscription = \DB::table('transactions')
             ->join('users', 'transactions.user_id', 'users.user_id')
+            ->join('multi_tenant_products', 'product_id', 'multi_tenant_products.id')
             ->where([$this->q])
+            ->where('product_type', 'subscription')
             ->whereNotNull('paid_at')
-            // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
             ->sum(\DB::raw('amount - fee_amount'));
 
-        return $data*auth()->user()->commission /100;
+        $kelas = \DB::table('transactions')
+            ->join('users', 'transactions.user_id', 'users.user_id')
+            ->join('multi_tenant_products', 'product_id', 'multi_tenant_products.id')
+            ->where([$this->q])
+            ->where('product_type', 'kelas')
+            ->whereNotNull('paid_at')
+            ->sum(\DB::raw('amount - fee_amount'));
+
+        return $subscription*auth()->user()->commission /100 + $kelas;
     }
 
     public function getWithdrawalData($start_date='2024-01-01', $end_date)

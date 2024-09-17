@@ -27,6 +27,7 @@
                                 <th>Jenis Produk</th>                                
                                 <th>Jumlah Pembayaran</th>
                                 <th>Potongan PG</th>
+                                <th>Komisi</th>
                                 <th>Tanggal Pembayaran</th>                 
                             </tr>
                         </thead>
@@ -39,6 +40,7 @@
                                 <td>{{$item->product_type}}</td>
                                 <td>@money($item->amount)</td>
                                 <td>@money($item->fee_amount) <br><span class="badge bg-primary">{{$item->payment_channel}}</span></td>
+                                <td>@money($item->komisi)</td>
                                 <td>{{$item->paid_at}}</td>
                             </tr>
                         @endforeach
