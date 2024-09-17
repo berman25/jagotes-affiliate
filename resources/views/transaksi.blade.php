@@ -23,7 +23,8 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>Telp</th>
-                                <th>Email</th>                                
+                                {{-- <th>Email</th> --}}
+                                <th>Jenis Produk</th>                                
                                 <th>Jumlah Pembayaran</th>
                                 <th>Potongan PG</th>
                                 <th>Tanggal Pembayaran</th>                 
@@ -34,7 +35,8 @@
                             <tr>
                                 <td>{{$item->user_name}}</td>
                                 <td>{{$item->telp}}</td>
-                                <td>{{$item->email}}</td>
+                                {{-- <td>{{$item->email}}</td> --}}
+                                <td>{{$item->product_type}}</td>
                                 <td>@money($item->amount)</td>
                                 <td>@money($item->fee_amount) <br><span class="badge bg-primary">{{$item->payment_channel}}</span></td>
                                 <td>{{$item->paid_at}}</td>

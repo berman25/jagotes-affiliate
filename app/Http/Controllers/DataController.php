@@ -52,11 +52,13 @@ class DataController extends Controller
     {
         $data = \DB::table('transactions')
                 ->join('users', 'transactions.user_id', 'users.user_id')
+                ->join('multi_tenant_products', 'product_id', 'multi_tenant_products.id')
                 ->where([$this->q])
                 ->whereNotNull('paid_at')
                 ->where('amount', '>', 0)
                 // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
-                ->selectRaw('users.user_id, user_name, telp, email, amount, fee_amount, payment_channel, paid_at')
+                ->selectRaw('users.user_id, user_name, telp, email, product_type,
+                    amount, fee_amount, payment_channel, paid_at')
                 ->orderBy('transactions.created_at', 'DESC')
                 ->get();
 
