@@ -9,9 +9,11 @@ class DataController extends Controller
     public function __construct()
     {
         if(auth()->user()->role == 'partner'){
-            $this->q = ['tenant_organization', '=', auth()->user()->organization];
+            $this->q = ['users.tenant_organization', '=', auth()->user()->organization];
+            $this->sales_q = ['affiliate_commissions.tenant_organization', '=', auth()->user()->organization];
         }else{
             $this->q = ['referenced_by', '=', auth()->user()->referral_code];
+            $this->sales_q = ['affiliate_commissions.source_id', '=', auth()->user()->referral_code];
         }
     }
 
@@ -37,29 +39,23 @@ class DataController extends Controller
 
     public function getSalesCount($start_date='2024-01-01', $end_date)
     {
-        $data = \DB::table('transactions')
-                ->join('users', 'transactions.user_id', 'users.user_id')
-                ->where([$this->q])
-                ->where('amount', '>', 0)
-                ->whereNotNull('paid_at')
-                // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
-                ->count();
+        $data = \DB::table('affiliate_commissions')
+            ->where([$this->sales_q])
+            ->count();
 
         return $data;
     }
 
     public function getSalesData($start_date='2024-01-01', $end_date)
     {
-        $data = \DB::table('transactions')
+        $data = \DB::table('affiliate_commissions')
+                ->join('transactions', 'transaction_ref', 'transactions.reference')
                 ->join('users', 'transactions.user_id', 'users.user_id')
                 ->join('multi_tenant_products', 'product_id', 'multi_tenant_products.id')
-                ->where([$this->q])
-                ->whereNotNull('paid_at')
-                ->where('amount', '>', 0)
-                // ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
-                ->selectRaw('users.user_id, user_name, telp, email, product_type,
-                    amount, fee_amount, payment_channel, paid_at')
-                ->orderBy('transactions.created_at', 'DESC')
+                ->where([$this->sales_q])
+                ->selectRaw('users.user_id, user_name, telp, email, product_type, multi_tenant_products.name as product_name,
+                    amount, fee_amount, revenue, payment_channel, commission_rate, affiliate_commissions.source, transactions.paid_at')
+                ->orderBy('transactions.paid_at', 'DESC')
                 ->get();
 
         return $data;
@@ -67,23 +63,11 @@ class DataController extends Controller
 
     public function getKomisi($start_date='2024-01-01', $end_date)
     {
-        $subscription = \DB::table('transactions')
-            ->join('users', 'transactions.user_id', 'users.user_id')
-            ->join('multi_tenant_products', 'product_id', 'multi_tenant_products.id')
-            ->where([$this->q])
-            ->where('product_type', 'subscription')
-            ->whereNotNull('paid_at')
-            ->sum(\DB::raw('amount - fee_amount'));
+        $commission = \DB::table('affiliate_commissions')
+            ->where([$this->sales_q])
+            ->sum(\DB::raw('revenue * commission_rate /100'));
 
-        $kelas = \DB::table('transactions')
-            ->join('users', 'transactions.user_id', 'users.user_id')
-            ->join('multi_tenant_products', 'product_id', 'multi_tenant_products.id')
-            ->where([$this->q])
-            ->where('product_type', 'kelas')
-            ->whereNotNull('paid_at')
-            ->sum(\DB::raw('amount - fee_amount'));
-
-        return $subscription*auth()->user()->commission /100 + $kelas;
+        return ceil($commission);
     }
 
     public function getWithdrawalData($start_date='2024-01-01', $end_date)

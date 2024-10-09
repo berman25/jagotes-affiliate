@@ -23,10 +23,10 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>Telp</th>
-                                {{-- <th>Email</th> --}}
-                                <th>Jenis Produk</th>                                
-                                <th>Jumlah Pembayaran</th>
-                                <th>Potongan PG</th>
+                                {{-- <th>Email</th> --}}                                                                
+                                <th>Sumber</th>
+                                <th>Nama Produk</th>
+                                <th>Penjualan Bersih</th>
                                 <th>Komisi</th>
                                 <th>Tanggal Pembayaran</th>                 
                             </tr>
@@ -35,12 +35,12 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>{{$item->user_name}}</td>
-                                <td>{{$item->telp}}</td>
+                                <td>{{$item->telp}}</td>                                
+                                <td>{{$item->source}}</td>
                                 {{-- <td>{{$item->email}}</td> --}}
-                                <td>{{$item->product_type}}</td>
-                                <td>@money($item->amount)</td>
-                                <td>@money($item->fee_amount) <br><span class="badge bg-primary">{{$item->payment_channel}}</span></td>
-                                <td>@money($item->komisi)</td>
+                                <td>{{$item->product_name}}</td>
+                                <td>@money($item->revenue) <br><span class="badge bg-primary">{{$item->payment_channel}}</span></td>
+                                <td>@money($item->komisi) <br><span class="badge bg-primary">{{$item->commission_rate}}%</span></td></td>
                                 <td>{{$item->paid_at}}</td>
                             </tr>
                         @endforeach

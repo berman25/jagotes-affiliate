@@ -46,11 +46,7 @@ class HomeController extends Controller
             ->getSalesData(null, \Carbon\Carbon::today());
 
         foreach($data as $e){
-            if($e->product_type == 'subscription'){
-                $e->komisi = ($e->amount - $e->fee_amount) * auth()->user()->commission /100;
-            }else if($e->product_type == 'kelas'){
-                $e->komisi = $e->amount - $e->fee_amount;
-            }
+            $e->komisi = $e->revenue *$e->commission_rate /100;
             
         }
 
