@@ -25,6 +25,7 @@ Route::get('/u/{referral_code}', function ($referral_code) {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/affiliator-performance', [App\Http\Controllers\HomeController::class, 'affiliatePerformance'])->name('affiliator-performance');
     Route::get('/pendaftar', [App\Http\Controllers\HomeController::class, 'pendaftar'])->name('pendaftar');
     Route::get('/transaksi', [App\Http\Controllers\HomeController::class, 'transaksi'])->name('transaksi');
     Route::get('/saldo', [App\Http\Controllers\HomeController::class, 'saldo'])->name('saldo');

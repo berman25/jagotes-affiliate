@@ -73,4 +73,18 @@ class HomeController extends Controller
         $cooldown = 0;
         return view('account')->with(compact('data','cooldown'));
     }
+
+    public function affiliatePerformance()
+    {
+        if(auth()->user()->role != "admin"){
+            return "unauthorize";
+        }
+
+        $data = \DB::table('affiliator_performance_new')
+            ->get();
+
+        return view('affiliator_performance')->with(compact('data'));
+            
+
+    }
 }

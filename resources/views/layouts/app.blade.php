@@ -152,6 +152,16 @@
           <span>Pengaturan Akun</span>
         </a>
       </li>
+      @if (auth()->user()->role == "admin")
+      <li class="nav-heading">Administrator</li> 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('affiliator-performance')}}">
+          <i class="bi bi-cash-coin"></i>
+          <span>Affiliator Performance</span>
+        </a>
+      </li>
+      @endif
+
     </ul>
 
   </aside><!-- End Sidebar-->
