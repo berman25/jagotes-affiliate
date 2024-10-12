@@ -152,7 +152,7 @@
           <span>Pengaturan Akun</span>
         </a>
       </li>
-      @if (auth()->user()->role == "admin")
+      @if (auth()->check() && auth()->user()->role == "admin")
       <li class="nav-heading">Administrator</li> 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('affiliator-performance')}}">
