@@ -34,8 +34,16 @@ class HomeController extends Controller
 
     public function pendaftar(Request $request)
     {
+        if($request->ajax()){
+            $data =  app('App\Http\Controllers\DataController')
+                ->getPendaftarData(null, \Carbon\Carbon::today());
+
+            return \DataTables::of($data)->make(true);
+        }
+
         $data =  app('App\Http\Controllers\DataController')
-            ->getPendaftarData(null, \Carbon\Carbon::today());
+                ->getPendaftarCountByService(null, \Carbon\Carbon::today());
+        
 
         return view('pendaftar')->with(compact('data'));
     }

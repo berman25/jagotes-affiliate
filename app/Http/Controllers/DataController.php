@@ -21,7 +21,7 @@ class DataController extends Controller
     {
         $data = \DB::table('users')
                 ->where([$this->q])
-                ->selectRaw('user_id, user_name, email, telp, created_at, last_login_at')
+                ->selectRaw('user_id, user_name, email, telp, tenant, created_at, last_login_at')
                 ->orderBy('created_at', 'DESC')
                 ->get();
 
@@ -33,6 +33,17 @@ class DataController extends Controller
         $data = \DB::table('users')
                 ->where([$this->q])
                 ->count();
+
+        return $data;
+    }
+
+    public function getPendaftarCountByService($start_date='2024-01-01', $end_date)
+    {
+        $data = \DB::table('users')
+                ->where([$this->q])
+                ->groupBy('tenant')
+                ->selectRaw('tenant, count(0) as jlh')
+                ->get();
 
         return $data;
     }
@@ -88,4 +99,6 @@ class DataController extends Controller
 
         return $this->getKomisi(null, \Carbon\Carbon::now()) - $withdrawal;
     }
+
+    
 }
