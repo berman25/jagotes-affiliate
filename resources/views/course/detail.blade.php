@@ -2,13 +2,13 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('content')
 
-<nav>
+{{-- <nav>
     <ol class="breadcrumb">
-      {{-- <li class="breadcrumb-item"><a href="{{route('course-view')}}">Course</a></li> --}}
+      <li class="breadcrumb-item"><a href="{{route('course-view')}}">Course</a></li>
       <li class="breadcrumb-item active">{{$course->title}}</li>
     </ol>
-</nav>
-
+</nav> --}}
+<a class="mb-3" href="#" onclick="history.back()"><-kembali</a>
 <section class="section">
     <div class="row">
         <div class="card mb-3">
@@ -19,7 +19,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                 <h5 class="card-title">{{$course->title}}</h5>
-                <p class="card-text">{{$course->description}}</p>
+                <p class="card-text">{{!!$course->description!!}}</p>
                 </div>
             </div>
             </div>

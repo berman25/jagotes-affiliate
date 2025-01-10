@@ -6,7 +6,7 @@
     <h1>Course</h1>    
 </div><!-- End Page Title -->
 
-<a href="#" onclick="history.back()">kembali</a>
+<a href="#" class="mb-3" onclick="history.back()"><-kembali</a>
 @foreach ($data as $item)
     <section class="section">
         <a href="{{route('course-detail', ['course_id' => $item->id])}}">

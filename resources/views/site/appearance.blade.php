@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="section contact">
-    <a href="#" onclick="history.back()">kembali</a>
+    <a class="mb-3" href="#" onclick="history.back()"><-kembali</a>
     <div class="row">
         <div class="col-lg-6">
             <div class="info-box card">
