@@ -36,6 +36,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/get-bank-account', [App\Http\Controllers\UserController::class, 'GetBankAccount'])->name('get-bank-account');
     Route::post('/withdrawal', [App\Http\Controllers\UserController::class, 'withdrawal'])->name('withdrawal');
     
+
+    //site setting
+    Route::get('/site-setting/index', [App\Http\Controllers\SiteSettingController::class, 'index'])->name('site-setting');
+    Route::get('/site-setting/appearance/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'appearance'])->name('site-appearance');
+
+    //course
+    Route::get('/course/index', [App\Http\Controllers\CourseController::class, 'index'])->name('course-index');    
+    Route::get('/course/view/{site_id}', [App\Http\Controllers\CourseController::class, 'view'])->name('course-view');
+    
+    Route::get('/course/detail/{course_id}', [App\Http\Controllers\CourseController::class, 'detail'])->name('course-detail');
+    
+    
 });
 
 Route::get('/account-verification', [App\Http\Controllers\UserController::class, 'verifyEmail']);
