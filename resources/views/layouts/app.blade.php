@@ -145,7 +145,7 @@
         </a>
       </li>
 
-      <li class="nav-heading">Konfigurasi</li> 
+      <li class="nav-heading">Konfigurasi Tampilan</li> 
       
       @if (auth()->check() && auth()->user()->role == "partner")
       <li class="nav-item">
@@ -172,18 +172,26 @@
       </li>
       @endif
       @if (auth()->check() && auth()->user()->role == "partner")
-      <li class="nav-heading">Manajemen Data</li> 
+      <li class="nav-heading">Manajemen Produk</li>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('course-index')}}">
           <i class="bi bi-cash-coin"></i>
           <span>Course</span>
         </a>
       </li>
+
+      {{-- <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('product')}}">
+          <i class="bi bi-cash-coin"></i>
+          <span>Produk</span>
+        </a>
+      </li> --}}
       @endif
 
     </ul>
 
-  </aside><!-- End Sidebar-->
+  </aside><!-- End Sidebar--> 
 
   <main id="main" class="main">
 

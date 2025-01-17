@@ -18,12 +18,25 @@ class CourseController extends Controller
 
     public function view($site_id)
     {
-        $data = \DB::table('courses')
-            ->where('tenant_id', $site_id)
-            ->selectRaw('id, title, description, cover, tenant_id')
+        $collection = \App\Models\Course
+            ::where('tenant_id', $site_id)
             ->get();
 
-        return view('course.view')->with(compact('data'));
+        return view('course.view')->with(compact('collection'));
+    }
+
+    public function update(Request $request, $course_id)
+    {
+        \App\Models\Course
+            ::where('id', $course_id)
+            ->update([
+                "title" => $request->title,
+                "cover" => $request->cover,
+                "description" => $request->description,
+                "info" => $request->info
+            ]);
+
+        return redirect()->back();
     }
 
     public function detail($course_id)

@@ -40,12 +40,20 @@ Route::group(['middleware' => ['auth']], function () {
     //site setting
     Route::get('/site-setting/index', [App\Http\Controllers\SiteSettingController::class, 'index'])->name('site-setting');
     Route::get('/site-setting/appearance/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'appearance'])->name('site-appearance');
+    Route::put('/site/update/1/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'update1'])->name('site.update1');
+    Route::put('/site/update/menu/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'updateMenu'])->name('site.update-menu');
+    Route::put('/site/update/color/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'updateColor'])->name('site.update-color');
+
 
     //course
     Route::get('/course/index', [App\Http\Controllers\CourseController::class, 'index'])->name('course-index');    
     Route::get('/course/view/{site_id}', [App\Http\Controllers\CourseController::class, 'view'])->name('course-view');
+    Route::put('/course/update/{course_id}', [App\Http\Controllers\CourseController::class, 'update'])->name('course.update');
     
     Route::get('/course/detail/{course_id}', [App\Http\Controllers\CourseController::class, 'detail'])->name('course-detail');
+    
+    Route::get('/product', [App\Http\Controllers\ProductController::class, 'index'])->name('product');
+    Route::put('/product/update/{product_id}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
     
     
 });

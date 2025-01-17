@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class MultiTenantProduct extends Model
 {
     use HasFactory;
-    
+
     protected $casts = [
-        'info' => 'array',
+        'benefits' => 'array',
     ];
 }
