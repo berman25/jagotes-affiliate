@@ -82,7 +82,7 @@ class CourseController extends Controller
                 'schedule_detail' => $request->schedule_detail,
                 'event_type' => 'liveclass',
                 'detail' => (object)[
-                    "zoom_link" => $request->zoom_link
+                    "link_zoom" => $request->zoom_link
                 ]
             ]);
 
