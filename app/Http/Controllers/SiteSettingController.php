@@ -33,7 +33,11 @@ class SiteSettingController extends Controller
             ->orderBy('ordering')
             ->get();
 
-        return view('site.appearance')->with(compact('site', 'menus', 'colors'));
+        $banner = \DB::table('multi_tenant_banners')
+            ->where('site_id', $site_id)
+            ->first();
+
+        return view('site.appearance')->with(compact('site', 'menus', 'colors', 'banner'));
     }
 
     public function update1(Request $request, $site_id)
@@ -73,6 +77,33 @@ class SiteSettingController extends Controller
             ->where('key', $request->key)
             ->update([
                 'value' => $request->value
+            ]);
+
+        return redirect()->back();
+    }
+
+    public function updateDashboardBanner(Request $request, $site_id)
+    {
+        \DB::table('multi_tenant_banners')
+            ->where('site_id', $site_id)
+            ->update([
+                'free_tryout' => $request->free_tryout,
+                'simulasi_id' => $request->simulasi_id,
+                'free_webinar' => $request->free_webinar,
+                'module_id' => $request->module_id,
+            ]);
+
+        return redirect()->back();
+    }
+
+    public function updateLoginBanner(Request $request, $site_id)
+    {
+        \DB::table('multi_tenant_banners')
+            ->where('site_id', $site_id)
+            ->update([
+                'login_banner_1' => $request->login_banner_1,
+                'login_banner_2' => $request->login_banner_2,
+                'login_banner_3' => $request->login_banner_3,
             ]);
 
         return redirect()->back();

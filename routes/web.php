@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/site/update/1/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'update1'])->name('site.update1');
     Route::put('/site/update/menu/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'updateMenu'])->name('site.update-menu');
     Route::put('/site/update/color/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'updateColor'])->name('site.update-color');
+    Route::put('/site/update/dashboard-banner/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'updateDashboardBanner'])->name('site.update-dashboard-banner');
+    Route::put('/site/update/login-banner/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'updateLoginBanner'])->name('site.update-login-banner');
 
 
     //course
