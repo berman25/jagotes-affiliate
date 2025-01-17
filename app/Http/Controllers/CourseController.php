@@ -49,16 +49,43 @@ class CourseController extends Controller
                 $join->on('p.instance_id', '=', 'courses.id');
             })
             ->where('courses.id', $course_id)
+            ->selectRaw('courses.id, courses.title')
             ->first();
-            
-        if($course->organization != auth()->user()->organization){
-            return "forbidden";
-        }
 
-        $modules = \App\Models\CourseModule
+        $collection = \App\Models\CourseModule
             ::where('course_id', $course_id)
             ->get();
 
-        return view('course.detail')->with(compact('course', 'modules')); 
+        return view('course.detail')->with(compact('course', 'collection')); 
+    }
+
+    public function moduleUpdate(Request $request, $module_id)
+    {
+        \App\Models\CourseModule
+            ::where('id', $module_id)
+            ->update([
+                'title' => $request->title,
+                'schedule' => $request->schedule,
+                'schedule_detail' => $request->schedule_detail
+            ]);
+
+        return redirect()->back();
+    }
+
+    public function moduleCreate(Request $request)
+    {
+        \App\Models\CourseModule
+            ::create([                
+                'course_id' => $request->course_id,
+                'title' => $request->title,
+                'schedule' => $request->schedule,
+                'schedule_detail' => $request->schedule_detail,
+                'event_type' => 'liveclass',
+                'detail' => (object)[
+                    "zoom_link" => $request->zoom_link
+                ]
+            ]);
+
+        return redirect()->back();
     }
 }

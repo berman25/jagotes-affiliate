@@ -9,6 +9,15 @@ class CourseModule extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'course_id',
+        'title',
+        'event_type',
+        'schedule',
+        'schedule_detail',
+        'detail'
+    ];
+
     protected $casts = [
         'detail' => 'array',
     ];

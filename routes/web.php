@@ -54,6 +54,10 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::get('/course/detail/{course_id}', [App\Http\Controllers\CourseController::class, 'detail'])->name('course-detail');
     
+    Route::post('/course/module/create', [App\Http\Controllers\CourseController::class, 'moduleCreate'])->name('course-module.create');
+    
+    Route::put('/course/module/update/{module_id}', [App\Http\Controllers\CourseController::class, 'moduleUpdate'])->name('course-module.update');
+    
     Route::get('/product', [App\Http\Controllers\ProductController::class, 'index'])->name('product');
     Route::put('/product/update/{product_id}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
     

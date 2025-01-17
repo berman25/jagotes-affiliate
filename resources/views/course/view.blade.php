@@ -43,6 +43,9 @@
                                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#fullscreenModal{{$item->id}}">
                                         <span class="bi bi-pencil-square"></span>
                                     </button>
+
+                                    <a href="{{route('course-detail', ['course_id' => $item->id])}}" class="btn btn-info"><i class="bi bi-gear"></i></a>
+                                    
                                         
                                 </td>
                                 <div class="modal fade" id="fullscreenModal{{$item->id}}" tabindex="-1">
