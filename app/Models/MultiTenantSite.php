@@ -11,9 +11,5 @@ class MultiTenantSite extends Model
 
     protected $primaryKey = 'id';
 
-    protected $casts = [
-        'color' => 'array',
-    ];
-
     public $incrementing = false;
 }
