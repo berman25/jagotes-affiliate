@@ -61,12 +61,25 @@ class CourseController extends Controller
 
     public function moduleUpdate(Request $request, $module_id)
     {
+        if($request->link_zoom){
+            $detail["link_zoom"] = $request->link_zoom;
+        }
+
+        if($request->record){
+            $detail["record"] = $request->record;
+        }
+
+        if($request->file){
+            $detail["file"] = $request->file;
+        }
+
         \App\Models\CourseModule
             ::where('id', $module_id)
             ->update([
                 'title' => $request->title,
                 'schedule' => $request->schedule,
-                'schedule_detail' => $request->schedule_detail
+                'schedule_detail' => $request->schedule_detail,
+                'detail' => $detail ?? null
             ]);
 
         return redirect()->back();
@@ -74,6 +87,18 @@ class CourseController extends Controller
 
     public function moduleCreate(Request $request)
     {
+        if($request->link_zoom){
+            $detail["link_zoom"] = $request->link_zoom;
+        }
+
+        if($request->record){
+            $detail["record"] = $request->record;
+        }
+
+        if($request->file){
+            $detail["file"] = $request->file;
+        }
+
         \App\Models\CourseModule
             ::create([                
                 'course_id' => $request->course_id,
@@ -81,9 +106,7 @@ class CourseController extends Controller
                 'schedule' => $request->schedule,
                 'schedule_detail' => $request->schedule_detail,
                 'event_type' => 'liveclass',
-                'detail' => (object)[
-                    "link_zoom" => $request->zoom_link
-                ]
+                'detail' => $detail ?? null
             ]);
 
         return redirect()->back();

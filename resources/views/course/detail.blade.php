@@ -82,11 +82,11 @@
                                                 <div class="row mb-3">
                                                   <label for="inputText" class="col-sm-2 col-form-label">Judul</label>
                                                   <div class="col-sm-10">
-                                                    <input type="text" name="title" class="form-control" value="{{$item->title}}">
+                                                    <input type="text" name="title" class="form-control" value="{{$item->title}}" required>
                                                   </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <label for="inputText" class="col-sm-2 col-form-label">Info</label>
+                                                    <label for="inputText" class="col-sm-2 col-form-label">Caption</label>
                                                     <div class="col-sm-10">
                                                       <input type="text" name="schedule_detail" class="form-control" value="{{$item->schedule_detail}}">
                                                     </div>
@@ -97,8 +97,29 @@
                                                     <div class="col-sm-10">
                                                       <input type="date" name="schedule" class="form-control" value="{{$item->schedule}}">
                                                     </div>
-                                                  </div>                                
-                                              
+                                                  </div>
+
+                                                  <div class="row mb-3">
+                                                    <label for="inputText" class="col-sm-2 col-form-label">Link Zoom</label>
+                                                    <div class="col-sm-10">
+                                                      <input type="text" name="link_zoom" class="form-control" value="{{$item->detail["link_zoom"] ?? null}}">
+                                                    </div>
+                                                  </div> 
+
+                                                  <div class="row mb-3">
+                                                    <label for="inputText" class="col-sm-2 col-form-label">Link Youtube</label>
+                                                    <div class="col-sm-10">
+                                                      <input type="text" name="record" class="form-control" value="{{$item->detail["record"] ?? null}}">
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="row mb-3">
+                                                    <label for="inputText" class="col-sm-3 col-form-label">Link File (G-Drive Preview)</label>
+                                                    <div class="col-sm-9">
+                                                      <textarea type="text" name="file" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
+                                                    </div>
+                                                  </div>   
+
                                                 </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -129,13 +150,13 @@
                     @method('POST')
                     <input type="hidden" name="course_id" value="{{$course->id}}">
                     <div class="row mb-3">
-                      <label for="inputText" class="col-sm-2 col-form-label">Judul</label>
+                      <label for="inputText" class="col-sm-2 col-form-label" required>Judul</label>
                       <div class="col-sm-10">
                         <input type="text" name="title" class="form-control">
                       </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="inputText" class="col-sm-2 col-form-label">Info</label>
+                        <label for="inputText" class="col-sm-2 col-form-label">Caption</label>
                         <div class="col-sm-10">
                           <input type="text" name="schedule_detail" class="form-control">
                         </div>
@@ -150,9 +171,21 @@
                       <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label">Link Zoom</label>
                         <div class="col-sm-10">
-                          <input type="text" name="zoom_link" class="form-control">
+                          <input type="text" name="link_zoom" class="form-control">
                         </div>
-                      </div>                                
+                      </div> 
+                      <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label">Link Youtube</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="record" class="form-control">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="inputText" class="col-sm-3 col-form-label">Link File (G-Drive Preview)</label>
+                        <div class="col-sm-9">
+                          <textarea type="text" name="file" class="form-control"></textarea>
+                        </div>
+                      </div>                               
                   
                     </div>
                     <div class="modal-footer">
