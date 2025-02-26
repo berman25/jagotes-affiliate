@@ -12,4 +12,12 @@ class MultiTenantSite extends Model
     protected $primaryKey = 'id';
 
     public $incrementing = false;
+
+    protected $fillable = [
+        'logo_square',
+        'logo_expand',
+        'name'
+    ];
+
+    public $timestamps = false;
 }

@@ -37,14 +37,14 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{route('site.update-dashboard-banner', ['site_id' => $site->id])}}" method="POST">
+                                <form action="{{route('site.update-dashboard-banner', ['site_id' => $site->id])}}" method="POST" enctype="multipart/form-data">
                                     @csrf                                          
                                     @method('PUT')                                   
                                                                         
                                     <div class="row mb-3">
-                                        <label for="inputText" class="col-sm-2 col-form-label">Free TO / Simulasi</label>
+                                        <label for="inputText" class="col-sm-2 col-form-label">Banner Simulasi</label>
                                         <div class="col-sm-10">
-                                          <input type="text" name="free_tryout" class="form-control" value="{{$banner->free_tryout}}">
+                                          <input type="file" name="free_tryout" class="form-control">
                                         </div>
                                       </div>
                                       <div class="row mb-3">
@@ -54,9 +54,9 @@
                                         </div>
                                       </div>
                                       <div class="row mb-3">
-                                        <label for="inputText" class="col-sm-2 col-form-label">Free webinar</label>
+                                        <label for="inputText" class="col-sm-2 col-form-label">Banner webinar</label>
                                         <div class="col-sm-10">
-                                          <input type="text" name="free_webinar" class="form-control" value="{{$banner->free_webinar}}">
+                                          <input type="file" name="free_webinar" class="form-control">
                                         </div>
                                       </div>
                                       <div class="row mb-3">
@@ -139,26 +139,26 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{route('site.update-login-banner', ['site_id' => $site->id])}}" method="POST">
+                                <form action="{{route('site.update-login-banner', ['site_id' => $site->id])}}" method="POST" enctype="multipart/form-data">
                                     @csrf                                          
                                     @method('PUT')                                   
                                                                         
                                     <div class="row mb-3">
                                         <label for="inputText" class="col-sm-2 col-form-label">Banner 1</label>
                                         <div class="col-sm-10">
-                                          <input type="text" name="login_banner_1" class="form-control" value="{{$banner->login_banner_1}}">
+                                          <input type="file" name="login_banner_1" class="form-control">
                                         </div>
                                       </div>
                                       <div class="row mb-3">
                                         <label for="inputText" class="col-sm-2 col-form-label">Banner 2</label>
                                         <div class="col-sm-10">
-                                          <input type="text" name="login_banner_2" class="form-control" value="{{$banner->login_banner_2}}">
+                                          <input type="file" name="login_banner_2" class="form-control">
                                         </div>
                                       </div>
                                       <div class="row mb-3">
                                         <label for="inputText" class="col-sm-2 col-form-label">Banner 3</label>
                                         <div class="col-sm-10">
-                                          <input type="text" name="login_banner_3" class="form-control" value="{{$banner->login_banner_3}}">
+                                          <input type="file" name="login_banner_3" class="form-control">
                                         </div>
                                       </div>                                                                                       
                                   
@@ -210,7 +210,7 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{route('site.update1', ['site_id' => $site->id])}}" method="POST">
+                                <form action="{{route('site.update1', ['site_id' => $site->id])}}" method="POST" enctype="multipart/form-data">
                                     @csrf                                          
                                     @method('PUT')
                                     <div class="row mb-3">
@@ -223,13 +223,13 @@
                                     <div class="row mb-3">
                                         <label for="inputText" class="col-sm-2 col-form-label">Logo Square</label>
                                         <div class="col-sm-10">
-                                          <input type="text" name="logo_square" class="form-control" value="{{$site->logo_square}}">
+                                          <input type="file" name="logo_square" class="form-control">
                                         </div>
                                       </div>
                                       <div class="row mb-3">
                                         <label for="inputText" class="col-sm-2 col-form-label">Logo Expand</label>
                                         <div class="col-sm-10">
-                                          <input type="text" name="logo_expand" class="form-control" value="{{$site->logo_expand}}">
+                                          <input type="file" name="logo_expand" class="form-control">
                                         </div>
                                       </div>                                                      
                                   
