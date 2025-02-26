@@ -38,6 +38,17 @@ class SiteSettingController extends Controller
             ->where('site_id', $site_id)
             ->first();
 
+        if(!$banner){
+            \App\Models\MultiTenantBanner
+                ::create([
+                    'site_id' => $site_id
+                ]);
+
+            $banner = \DB::table('multi_tenant_banners')
+                ->where('site_id', $site_id)
+                ->first();
+        }
+
         return view('site.appearance')->with(compact('site', 'menus', 'colors', 'banner'));
     }
 
