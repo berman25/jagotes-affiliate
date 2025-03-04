@@ -83,26 +83,31 @@ body {
         
         <p style="font-weight: bolder;">REKOMENDASI PLATFORM TRYOUT</p>
         <p>Halo temen-temen!
-          Kenalin aku {{$user->name}}, aku senang membagikan informasi terkait persiapan tes CPNS, PPPK dan Sekolah Kedinasan. Aku buatin link ini untuk memudahkan kalian mencari platform tryout yang kalian butuhkan</p>
+          Kenalin aku {{$user->name}}, aku senang membagikan informasi terkait persiapan tes BUMN, LPDP, CPNS, PPPK dan Sekolah Kedinasan. Aku buatin link ini untuk memudahkan kalian mencari platform tryout yang kalian butuhkan</p>
       </div>
 
       <!-- Links section 1. Replace the # inside of the "" with your links. -->
       
       <div class="links-container">
+        
+        <a href="https://portal-bumn.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">BUMN</a>
+        <br>
+        
+        <a href="https://portal-lpdp.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">LPDP</a>
+        <br>
         <a href="https://portal-cpns.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">CPNS</a>
         <br>
         <a href="https://portal-pppk.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">PPPK</a>
         <br>
         <a href="https://portal-kedinasan.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">SEKOLAH KEDINASAN</a>
-        {{-- <br>
-        <a href="https://portal-bumn.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">BUMN</a> --}}
+        
       </div>
 
      
 
       <!-- Bottom section 3 -->
       <div class="bottom margin-top-2 w3-padding w3-round">
-        <span style="vertical-align: 7px;"> 2024 - kliktes</span>
+        <span style="vertical-align: 7px;"> 2025 - kliktes</span>
       </div>
 
     </div>
