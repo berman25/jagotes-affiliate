@@ -26,15 +26,33 @@ class CourseController extends Controller
     }
 
     public function update(Request $request, $course_id)
-    {
-        \App\Models\Course
+    {        
+        $model = \App\Models\Course
             ::where('id', $course_id)
-            ->update([
-                "title" => $request->title,
-                "cover" => $request->cover,
-                "description" => $request->description,
-                "info" => $request->info
-            ]);
+            ->first();
+
+        if($request->cover){
+            $imagePath = 'course/cover/'.$course_id.'.png';
+            $url = app('App\Http\Controllers\SiteSettingController')
+                ->uploadImage($request->cover, $imagePath);
+            $model->cover = $url;
+        }
+
+        $info = array(
+            "subtitle" => $request->subtitle
+        );
+
+        if($request->button_text && $request->button_link){
+            $info["button"] = array(
+                "text" => $request->button_text,
+                "link" => $request->button_link
+            );
+        }
+
+        $model->title = $request->title;
+        $model->description = $request->description;
+        $model->info = [$info];
+        $model->save();
 
         return redirect()->back();
     }

@@ -56,7 +56,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{route('course.update', ['course_id' => $item->id])}}" method="POST">
+                                            <form action="{{route('course.update', ['course_id' => $item->id])}}" method="POST" enctype="multipart/form-data">
                                                 @csrf                                          
                                                 @method('PUT')
                                                 <div class="row mb-3">
@@ -68,25 +68,35 @@
                                                 <div class="row mb-3">
                                                     <label for="inputText" class="col-sm-2 col-form-label">Cover Link</label>
                                                     <div class="col-sm-10">
-                                                      <input type="text" name="cover" class="form-control" value="{{$item->cover}}">
+                                                        <input type="file" name="cover" class="form-control">
                                                     </div>
                                                   </div>
                                                   <div class="row mb-3">
                                                     <label for="inputDescription" class="col-sm-2 col-form-label">Deskripsi</label>
                                                     <div class="col-sm-10">
-                                                      <textarea class="form-control" name="description" style="height: 150px">
+                                                      <textarea class="form-control" name="description" id="txtEditor1">
                                                           {!!$item->description!!}
                                                       </textarea>
                                                     </div>
                                                   </div>
                                                   
                                                 <div class="row mb-3">
-                                                  <label for="inputBenefit" class="col-sm-2 col-form-label">Info</label>
+                                                  <label for="inputBenefit" class="col-sm-2 col-form-label">Sidebar Info</label>
                                                   <div class="col-sm-10">
-                                                    <textarea class="form-control" name="info" style="height: 150px">
-                                                        {{json_encode($item->info)}}
-                                                    </textarea>
-                                                  </div>
+                                                    <input class="form-control" name="subtitle" value="{{$item->info[0]["subtitle"]??null}}">                                                        
+                                                  </div>                                                  
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="inputBenefit" class="col-sm-2 col-form-label">Button Text</label>
+                                                    <div class="col-sm-5">
+                                                      <input class="form-control" name="button_text" value="{{$item->info[0]["button"]["text"]??null}}">                                                        
+                                                    </div>                                                  
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="inputBenefit" class="col-sm-2 col-form-label">Button Link</label>
+                                                    <div class="col-sm-10">
+                                                      <input class="form-control" name="button_link" value="{{$item->info[0]["button"]["link"]??null}}">                                                        
+                                                    </div>                                                  
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
@@ -106,6 +116,18 @@
         </div>
     </div>
 </section>
+@stop
 
-
+@section('js')
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+		.create( document.querySelector( '#txtEditor1' ) )
+        .then( newEditor => {
+            editor1 = newEditor;
+        } )
+		.catch( error => {
+			console.error( error );
+		} );
+</script>
 @stop
