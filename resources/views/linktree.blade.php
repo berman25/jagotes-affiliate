@@ -92,7 +92,8 @@ body {
         
         <a href="https://portal-bumn.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">BUMN</a>
         <br>
-        
+        <a href="https://app.goptn.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">UTBK SNBT</a>        
+        <br>        
         <a href="https://portal-lpdp.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">LPDP</a>
         <br>
         <a href="https://portal-cpns.jagotes.id/register?code={{$user->referral_code}}" class="w3-button w3-round-xlarge w3-theme-l1 w3-border link" target="_blank">CPNS</a>
