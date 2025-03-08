@@ -83,7 +83,7 @@ body {
         
         <p style="font-weight: bolder;">REKOMENDASI PLATFORM TRYOUT</p>
         <p>Halo temen-temen!
-          Kenalin aku {{$user->name}}, aku senang membagikan informasi terkait persiapan tes BUMN, LPDP, CPNS, PPPK dan Sekolah Kedinasan. Aku buatin link ini untuk memudahkan kalian mencari platform tryout yang kalian butuhkan</p>
+          Kenalin aku {{$user->name}}, aku senang membagikan informasi terkait persiapan tes BUMN, UTBK SNBT, LPDP, CPNS, PPPK dan Sekolah Kedinasan. Aku buatin link ini untuk memudahkan kalian mencari platform tryout yang kalian butuhkan</p>
       </div>
 
       <!-- Links section 1. Replace the # inside of the "" with your links. -->
