@@ -27,7 +27,7 @@
                                 <th>Sumber</th>
                                 <th>Nama Produk</th>
                                 <th>Penjualan Bersih</th>
-                                <th>Komisi</th>
+                                <th>Pendapatan</th>
                                 <th>Tanggal Pembayaran</th>                 
                             </tr>
                         </thead>
