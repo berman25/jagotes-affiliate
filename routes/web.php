@@ -36,7 +36,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/get-bank-account', [App\Http\Controllers\UserController::class, 'GetBankAccount'])->name('get-bank-account');
     Route::post('/withdrawal', [App\Http\Controllers\UserController::class, 'withdrawal'])->name('withdrawal');
     
-
+    Route::get('/get-user', [App\Http\Controllers\StudentController::class, 'getUser'])->name('get.user');
+    
+    
     //site setting
     Route::get('/site-setting/index', [App\Http\Controllers\SiteSettingController::class, 'index'])->name('site-setting');
     Route::get('/site-setting/appearance/{site_id}', [App\Http\Controllers\SiteSettingController::class, 'appearance'])->name('site-appearance');
@@ -61,6 +63,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/product', [App\Http\Controllers\ProductController::class, 'index'])->name('product');
     Route::put('/product/update/{product_id}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
     
+    Route::get('/tryout/view', [App\Http\Controllers\TryoutController::class, 'view'])->name('tryout-view');
+    Route::get('/tryout/participant/{package_id}', [App\Http\Controllers\TryoutController::class, 'participants'])->name('tryout-participant');
+    Route::post('/assign-user', [App\Http\Controllers\TryoutController::class, 'assignUser'])->name('assign-user');
     
 });
 

@@ -46,7 +46,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
+        <link href="{{asset('assets/img/logo.png')}}" rel="icon">
         <span class="d-none d-lg-block">kliktes</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -181,6 +181,13 @@
         </a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('tryout-view')}}">
+          <i class="bi bi-cash-coin"></i>
+          <span>Tryout</span>
+        </a>
+      </li>
+
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('product')}}">
           <i class="bi bi-cash-coin"></i>
@@ -213,7 +220,7 @@
   <script src="{{ URL::asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="{{asset('assets/js/main.js')}}"></script>
   @yield('js')
 </body>
 
