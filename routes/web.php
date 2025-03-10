@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/product/update/{product_id}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
     
     Route::get('/tryout/view', [App\Http\Controllers\TryoutController::class, 'view'])->name('tryout-view');
+    Route::put('/tryout/update/{package_id}', [App\Http\Controllers\TryoutController::class, 'update'])->name('tryout.update');
     Route::get('/tryout/participant/{package_id}', [App\Http\Controllers\TryoutController::class, 'participants'])->name('tryout-participant');
     Route::post('/assign-user', [App\Http\Controllers\TryoutController::class, 'assignUser'])->name('assign-user');
     

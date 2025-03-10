@@ -32,7 +32,7 @@ class CourseController extends Controller
             ->first();
 
         if($request->cover){
-            $imagePath = 'course/cover/'.$course_id.'.png';
+            $imagePath = 'cover/course/'.$course_id.'.png';
             $url = app('App\Http\Controllers\SiteSettingController')
                 ->uploadImage($request->cover, $imagePath);
             $model->cover = $url;

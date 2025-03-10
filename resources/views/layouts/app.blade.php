@@ -176,14 +176,14 @@
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('course-index')}}">
-          <i class="bi bi-cash-coin"></i>
+          <i class="bi bi-laptop"></i>
           <span>Course</span>
         </a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('tryout-view')}}">
-          <i class="bi bi-cash-coin"></i>
+          <i class="bi bi-journal-text"></i>
           <span>Tryout</span>
         </a>
       </li>

@@ -6,6 +6,38 @@ use Illuminate\Http\Request;
 
 class TryoutController extends Controller
 {
+    public function update(Request $request, $id)
+    {
+        $model = \App\Models\TryoutPackage
+            ::where('id', $id)
+            ->first();
+
+        if($request->cover){
+            $imagePath = 'cover/tryout/'.$id.'.png';
+            $url = app('App\Http\Controllers\SiteSettingController')
+                ->uploadImage($request->cover, $imagePath);
+            $model->cover = $url;
+        }
+
+        $info = array(
+            "subtitle" => $request->subtitle
+        );
+
+        if($request->button_text && $request->button_link){
+            $info["button"] = array(
+                "text" => $request->button_text,
+                "link" => $request->button_link
+            );
+        }
+
+        $model->name = $request->name;
+        $model->description = $request->description;
+        $model->sidebar_info = [$info];
+        $model->save();
+
+        return redirect()->back();
+    }
+
     public function view()
     {
         $collection = \App\Models\TryoutPackage
