@@ -72,6 +72,7 @@ class CourseController extends Controller
 
         $collection = \App\Models\CourseModule
             ::where('course_id', $course_id)
+            ->orderBy('schedule')
             ->get();
 
         return view('course.detail')->with(compact('course', 'collection')); 
