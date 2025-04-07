@@ -59,7 +59,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/course/module/create', [App\Http\Controllers\CourseController::class, 'moduleCreate'])->name('course-module.create');
     
     Route::put('/course/module/update/{module_id}', [App\Http\Controllers\CourseController::class, 'moduleUpdate'])->name('course-module.update');
+    Route::get('/course/quiz/view/{module_id}', [App\Http\Controllers\CourseController::class, 'viewQuiz'])->name('course-quiz.view');
     
+    Route::post('/course/quiz/create/{module_id}', [App\Http\Controllers\CourseController::class, 'createQuiz'])->name('course-quiz.create');
+	Route::get('/course/quiz/show-question', [App\Http\Controllers\CourseController::class, 'showQuestion'])->name('question.show');
+    Route::put('/course/quiz/update-question', [App\Http\Controllers\CourseController::class, 'updateQuestion'])->name('question.update');
+
     Route::get('/product', [App\Http\Controllers\ProductController::class, 'index'])->name('product');
     Route::put('/product/update/{product_id}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
     

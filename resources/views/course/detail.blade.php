@@ -22,7 +22,7 @@
                                 <th>Judul</th>
                                 <th>Info</th>
                                 <th>Jadwal</th>
-                                <th>Detail</th>
+                                {{-- <th>Detail</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>                        
@@ -32,7 +32,7 @@
                                 <td>{{$item->title}}</td>
                                 <td>{{$item->schedule_detail}}</td>
                                 <td>{{$item->schedule}}</td>
-                                <td style="max-width:200px; overflow:auto"> 
+                                {{-- <td style="max-width:200px; overflow:auto"> 
                                     <ul class="list-group">
                                         @if (is_array($item->detail))
                                             @foreach ($item->detail as $key => $value)                                            
@@ -59,13 +59,19 @@
                                             @endforeach
                                         @endif
                                     </ul>
-                                </td>
+                                </td> --}}
                                 
                                 <td align="right" style="width:1px; white-space:nowrap;">
                                     <!-- Button Form Edit -->
                                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modal{{$item->id}}">
                                         <span class="bi bi-pencil-square"></span>
                                     </button>
+                                    <a href="{{route('course-quiz.view', ['module_id' => $item->id])}}" type="button" class="btn btn-success">
+                                      <span class="bi bi-book"></span>
+                                    </a>
+                                  <a type="button" class="btn btn-primary">
+                                    <span class="bi bi-file-earmark-word"></span>
+                                  </a>
                                         
                                 </td>
                                 <div class="modal fade" id="modal{{$item->id}}" tabindex="-1">
@@ -112,13 +118,32 @@
                                                       <input type="text" name="record" class="form-control" value="{{$item->detail["record"] ?? null}}">
                                                     </div>
                                                   </div>
-
                                                   <div class="row mb-3">
-                                                    <label for="inputText" class="col-sm-3 col-form-label">Link File (G-Drive Preview)</label>
-                                                    <div class="col-sm-9">
-                                                      <textarea type="text" name="file" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
+                                                    <h4>FILE</h4>
+                                                  </div>
+                                                  <div class="row mb-3">
+                                                    <label for="inputText" class="col-sm-1 ">1</label>
+                                                    <div class="col-sm-4">
+                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
                                                     </div>
                                                   </div>   
+
+                                                  <div class="row mb-3">
+                                                    <label for="inputText" class="col-sm-3 col-form-label">File 2 (G-Drive Preview)</label>
+                                                    <div class="col-sm-9">
+                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="row mb-3">
+                                                    <label for="inputText" class="col-sm-3 col-form-label">File 3 (G-Drive Preview)</label>
+                                                    <div class="col-sm-9">
+                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
+                                                    </div>
+                                                  </div>
 
                                                 </div>
                                                 <div class="modal-footer">
