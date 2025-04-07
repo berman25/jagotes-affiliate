@@ -65,7 +65,11 @@
                   <div class="form-group">
                       <label class="control-label">Jumlah Soal</label>                    
                       <input type="number" class="form-control" name="total_question" required>                    
-                  </div>                  
+                  </div>  
+                  <div class="form-group">
+                    <label class="control-label">Durasi (menit)</label>                    
+                    <input type="number" class="form-control" name="duration" required>                    
+                </div>                
 
                   <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-primary">Create

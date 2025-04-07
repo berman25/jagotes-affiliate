@@ -11,7 +11,10 @@ class CourseQuiz extends Model
 
     protected $fillable = [
         'id',
-        'name'
+        'module_id',     
+        'name',
+        'duration',
+        'is_active'
     ];
 
     public $incrementing = false;

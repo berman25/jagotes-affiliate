@@ -165,8 +165,9 @@ class CourseController extends Controller
         $quiz_section = \App\Models\CourseQuiz
             ::create([
                 'id' => $id,
-                'subject' => $request->subject,
-                'name' => "Kuis ".$module->title
+                'module_id' => $module_id,
+                'name' => "Kuis ".$module->title,
+                'duration' => $request->duration
             ]);
 
         for ($i = 1; $i <= $request->total_question; $i++) {
@@ -189,16 +190,7 @@ class CourseController extends Controller
             }
 
         }
-
-        $module = \App\Models\CourseModule
-            ::where('id', $module_id)
-            ->first();
-
-        $module_detail = $module->detail;
-        $module_detail["quiz_id"] = $id;
-        $module->detail = $module_detail;
-        $module->save();
-
+       
         return redirect()->back();
     }
 
@@ -208,10 +200,13 @@ class CourseController extends Controller
             ::where('id', $module_id)
             ->first();
 
-        if($module->detail && key_exists("quiz_id", $module->detail)){
-            $quiz = \DB::table('course_quiz')
-                ->where('id', $module->detail["quiz_id"])
-                ->first();
+        $quiz = \DB::table('course_quiz')
+            ->where('module_id', $module_id)
+            ->first();
+
+        $questions = null;
+
+        if($quiz){
 
             $question_options = \DB::table('question_options')
                 ->where('grade', '>', 0)
@@ -224,12 +219,9 @@ class CourseController extends Controller
                     $join->on('questions.id', '=', 'question_options.question_id');
                 })
                 ->leftJoin('utbk_topics', 'topic', 'utbk_topics.id')
-                ->where('assessment_id', $module->detail["quiz_id"])
+                ->where('assessment_id', $quiz->id)
                 ->selectRaw('questions.*,question_options.*,topic_name')
                 ->get();
-        }else{
-            $quiz = null;
-            $questions = null;
         }
 
         return view('course.quiz')->with(compact('module', 'quiz', 'questions'));
