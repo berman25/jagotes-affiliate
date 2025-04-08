@@ -69,7 +69,7 @@
                                     <a href="{{route('course-quiz.view', ['module_id' => $item->id])}}" type="button" class="btn btn-success">
                                       <span class="bi bi-book"></span>
                                     </a>
-                                  <a type="button" class="btn btn-primary">
+                                  <a href="{{route('course-module-detail.view', ['module_id' => $item->id])}}" type="button" class="btn btn-primary">
                                     <span class="bi bi-file-earmark-word"></span>
                                   </a>
                                         
