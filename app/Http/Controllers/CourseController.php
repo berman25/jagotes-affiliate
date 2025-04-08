@@ -91,10 +91,6 @@ class CourseController extends Controller
             $detail["record"] = $request->record;
         }
 
-        // if($request->file){
-        //     $detail["file"] = $request->file;
-        // }
-
         \App\Models\CourseModule
             ::where('id', $module_id)
             ->update([
@@ -103,18 +99,7 @@ class CourseController extends Controller
                 'schedule_detail' => $request->schedule_detail,
                 'detail' => $detail ?? null
             ]);
-
-        foreach($request->file as $k => $e){
-            \DB::table('course_module_details')
-                ->insert([
-                    'number' => $k + 1,
-                    'name' => $request->file_name[$k],
-                    'module_type' => 'file',
-                    'value' => $e,
-                    'module_id' => $module_id
-                ]);
-        }
-
+        
         return redirect()->back();
     }
 
