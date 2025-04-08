@@ -118,34 +118,9 @@
                                                       <input type="text" name="record" class="form-control" value="{{$item->detail["record"] ?? null}}">
                                                     </div>
                                                   </div>
-                                                  <div class="row mb-3">
-                                                    <h4>FILE</h4>
-                                                  </div>
-                                                  <div class="row mb-3">
-                                                    <label for="inputText" class="col-sm-1 ">1</label>
-                                                    <div class="col-sm-4">
-                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
-                                                    </div>
-                                                    <div class="col-sm-7">
-                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
-                                                    </div>
-                                                  </div>   
+                                                  
 
-                                                  <div class="row mb-3">
-                                                    <label for="inputText" class="col-sm-3 col-form-label">File 2 (G-Drive Preview)</label>
-                                                    <div class="col-sm-9">
-                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
-                                                    </div>
-                                                  </div>
-
-                                                  <div class="row mb-3">
-                                                    <label for="inputText" class="col-sm-3 col-form-label">File 3 (G-Drive Preview)</label>
-                                                    <div class="col-sm-9">
-                                                      <textarea type="text" name="file[]" class="form-control">{{$item->detail["file"] ?? null}}</textarea>
-                                                    </div>
-                                                  </div>
-
-                                                </div>
+                                                
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -204,13 +179,7 @@
                         <div class="col-sm-10">
                           <input type="text" name="record" class="form-control">
                         </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="inputText" class="col-sm-3 col-form-label">Link File (G-Drive Preview)</label>
-                        <div class="col-sm-9">
-                          <textarea type="text" name="file" class="form-control"></textarea>
-                        </div>
-                      </div>                               
+                      </div>                              
                   
                     </div>
                     <div class="modal-footer">
