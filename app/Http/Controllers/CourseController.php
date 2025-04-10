@@ -52,7 +52,7 @@ class CourseController extends Controller
         }
 
         $model->title = $request->title;
-        $model->description = $this->dataready($request->description, 'course_description');
+        $model->description = $this->dataready($request->description);
         $model->info = [$info];
         $model->save();
 
@@ -130,15 +130,15 @@ class CourseController extends Controller
         return redirect()->back();
     }
 
-    // public function dataready($data) 
-    // {        
-    //     $dom = new \DOMDocument();
-    //     libxml_use_internal_errors(true);
-    //     $dom->loadHTML($data);        
-    //     $data = $dom->saveHTML();        
-    //     $data = htmlspecialchars($data);
-    //     return $data;
-    // }
+    public function dataready($data) 
+    {        
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($data);        
+        $data = $dom->saveHTML();        
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
     
 }
