@@ -62,81 +62,42 @@
                             </tr>
                             
                             <tr class="choice">
-                                <td>PILIHAN</td>                                
+                                <td colspan="2">PILIHAN</td>
+                                <td>SKOR</td>          
                             </tr>
                             <tr class="choice">
                                 <td>A</td>
                                 <td><div id="optiona"></div></td>
                                 <td>
-                                    <select class="form-control" id="optionanswera" name="optionanswera" style="width: 100px">
-                                        <option value="0">SALAH</option>
-                                        <option value="1">BENAR</option>
-                                        <option value="11">1</option>
-                                        <option value="12">2</option>
-                                        <option value="13">3</option>
-                                        <option value="14">4</option>
-                                        <option value="15">5</option>
-                                    </select>
+                                    <input class="form-control" type="number" name="scorea" id="scorea" value="0">
                                 </td>
                             </tr>
                             <tr class="choice">
                                 <td>B</td>
                                 <td><div id="optionb"></div></td>
                                 <td>
-                                    <select class="form-control" id="optionanswerb" name="optionanswerb" style="width: 100px">
-                                        <option value="0">SALAH</option>
-                                        <option value="1">BENAR</option>
-                                        <option value="11">1</option>
-                                        <option value="12">2</option>
-                                        <option value="13">3</option>
-                                        <option value="14">4</option>
-                                        <option value="15">5</option>
-                                    </select>
+                                    <input class="form-control" type="number" name="scoreb" id="scoreb" value="0">
                                 </td>
                             </tr>
                             <tr class="choice">
                                 <td>C</td>
                                 <td><div id="optionc"></div></td>
                                 <td>
-                                    <select class="form-control" id="optionanswerc" name="optionanswerc" style="width: 100px">
-                                        <option value="0">SALAH</option>
-                                        <option value="1">BENAR</option>
-                                        <option value="11">1</option>
-                                        <option value="12">2</option>
-                                        <option value="13">3</option>
-                                        <option value="14">4</option>
-                                        <option value="15">5</option>
-                                    </select>
+                                    <input class="form-control" type="number" name="scorec" id="scorec" value="0">
                                 </td>
                             </tr>
                             <tr class="choice">
                                 <td>D</td>
                                 <td><div id="optiond"></div></td>
                                 <td>
-                                    <select class="form-control" id="optionanswerd" name="optionanswerd" style="width: 100px">
-                                        <option value="0">SALAH</option>
-                                        <option value="1">BENAR</option>
-                                        <option value="11">1</option>
-                                        <option value="12">2</option>
-                                        <option value="13">3</option>
-                                        <option value="14">4</option>
-                                        <option value="15">5</option>
-                                    </select>
+                                    <input class="form-control" type="number" name="scored" id="scored" value="0">
                                 </td>
                             </tr>
                             <tr class="choice">
                                 <td>E</td>
                                 <td><div id="optione"></div></td>
                                 <td>
-                                    <select class="form-control" id="optionanswere" name="optionanswere" style="width: 100px">
-                                        <option value="0">SALAH</option>
-                                        <option value="1">BENAR</option>
-                                        <option value="11">1</option>
-                                        <option value="12">2</option>
-                                        <option value="13">3</option>
-                                        <option value="14">4</option>
-                                        <option value="15">5</option>
-                                    </select>
+                                    <input class="form-control" type="number" name="scoree" id="scoree" value="0">
                                 </td>
                             </tr>
                             
@@ -329,7 +290,8 @@ $(document).ready( function($) {
                                 break;
                         }
                         
-                        $('#optionanswer'+e.option).val(e.is_true);
+                        $('#score'+e.option).val(e.grade);
+                        console.log('#score'+e.option, e.grade)
                     });
                 }
                 
@@ -378,9 +340,7 @@ $(document).ready( function($) {
                 type: "put",
                 dataType: 'json',            
                 success: function (data) {
-                    // alert("success!");
-                    loadquestion(data)
-                    jQuery("#loading").hide();
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);
