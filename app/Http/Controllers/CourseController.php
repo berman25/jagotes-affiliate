@@ -52,7 +52,7 @@ class CourseController extends Controller
         }
 
         $model->title = $request->title;
-        $model->description = $this->dataready($request->description);
+        $model->description = $request->description;
         $model->info = [$info];
         $model->save();
 

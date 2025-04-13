@@ -74,7 +74,7 @@
                                                   <div class="row mb-3">
                                                     <label for="inputDescription" class="col-sm-2 col-form-label">Deskripsi</label>
                                                     <div class="col-sm-10">
-                                                      <textarea class="form-control" name="description" id="txtEditor1">
+                                                      <textarea class="form-control" name="description">
                                                           {!!$item->description!!}
                                                       </textarea>
                                                     </div>
@@ -121,13 +121,6 @@
 @section('js')
 <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
 <script>
-    ClassicEditor
-		.create( document.querySelector( '#txtEditor1' ) )
-        .then( newEditor => {
-            editor1 = newEditor;
-        } )
-		.catch( error => {
-			console.error( error );
-		} );
+   
 </script>
 @stop
