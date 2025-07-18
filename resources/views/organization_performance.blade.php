@@ -13,11 +13,33 @@
             </div>
         </div>
 
-        <!-- Performance Card -->
+        <!-- Summary Card -->
         <div class="col-xxl-4 col-xl-12">
             <div class="card info-card">
                 <div class="card-body">
-                    <h5 class="card-title">Organization Performance</h5>
+                    <h5 class="card-title">Summary</h5>
+
+                    <table id="datatable-summary">
+                        <thead>
+                            <tr>
+                                <th>Tenant</th>
+                                <th>User Baru</th>
+                                <th>Invoice</th>
+                                <th>Paid</th>
+                                <th>Omset</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Card -->
+        <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card">
+                <div class="card-body">
+                    <h5 class="card-title">Detail</h5>
 
                     <table id="sales" class="table">
                       <thead>
@@ -72,46 +94,58 @@
         // if ($.fn.dataTable.isDataTable('#sales')) {
         //     $('#sales').DataTable().clear().destroy();
         // }
-        // $.ajax({
-        //   url: '{{ url("/organization-perfomance") }}',
-        //     data: {
-        //         start: start.format('YYYY-MM-DD'),
-        //         end: end.format('YYYY-MM-DD')
-        //     },
-        //   success: function(data) {
-        //     alert("success")
-        //   },
-        //   error: function(xhr, status, error) {
-        //     // Handle any errors that occur during the request
-        //     console.error('Error:', error);
-        //   }
-        // });
-        $('#sales').DataTable({
-            iDisplayLength: 25,
-            ordering: false,
-            info: false,
-            ajax: {
-                url: '{{ url("/organization-perfomance") }}',
-                data: {
-                    start: start.format('YYYY-MM-DD'),
-                    end: end.format('YYYY-MM-DD')
-                }
+        $.ajax({
+            url: '{{ url("/organization-perfomance") }}',
+            data: {
+                start: start.format('YYYY-MM-DD'),
+                end: end.format('YYYY-MM-DD')
             },
-            columns: [
-                { data: 'tgl', name: 'tgl', render: function(data) {
-                        return moment(data).format('DD/MM/YYYY');
-                    }
-                },
-                { data: 'tenant_site_id', name: 'tenant_site_id'  },                
-                { data: 'registered_users', name: 'registered_users'  },
-                { data: 'invoice_create', name: 'invoice_create' },
-                { data: 'paid', name: 'paid'  },
-                { data: 'omset', name: 'omset', render: function(data) {
-                        return rupiah(data);
-                    }  
-                },
-            ]
+            success: function(response) {
+                //Table Detail
+                $('#sales').DataTable({
+                    iDisplayLength: 25,
+                    ordering: false,
+                    info: false,
+                    destroy: true,
+                    data: response.data_detail,
+                    columns: [
+                        { data: 'tgl', name: 'tgl', render: function(data) {
+                                return moment(data).format('DD/MM/YYYY');
+                            }
+                        },
+                        { data: 'tenant_site_id', name: 'tenant_site_id'  },                
+                        { data: 'registered_users', name: 'registered_users'  },
+                        { data: 'invoice_create', name: 'invoice_create' },
+                        { data: 'paid', name: 'paid'  },
+                        { data: 'omset', name: 'omset', render: function(data) {
+                                return rupiah(data);
+                            }  
+                        },
+                    ]
+                });
+
+                //Table Summary
+                $('#datatable-summary').DataTable({
+                    destroy: true,
+                    data: response.data_summary,
+                    columns: [
+                        { data: 'tenant_site_id' },
+                        { data: 'user_baru' },
+                        { data: 'invoice_create' },
+                        { data: 'paid' },
+                        { data: 'omset', name: 'omset', render: function(data) {
+                                return rupiah(data);
+                            }  
+                        },
+                    ]
+                });
+            },
+            error: function(xhr, status, error) {
+                // Handle any errors that occur during the request
+                console.error('Error:', error);
+            }
         });
+        
     }
   });
 </script>

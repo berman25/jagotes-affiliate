@@ -110,24 +110,33 @@ class HomeController extends Controller
                 $tenantIds[] = $request->tenant_id;
             }
 
-            // if($request->start < "2025-01-01"){
-            //     $request->start = "2025-01-01";
-            // }
+            if($request->start < "2025-01-01"){
+                $request->start = "2025-01-01";
+            }
 
-            $query =  app('App\Http\Controllers\DataController')
+            $data_detail =  app('App\Http\Controllers\DataController')
                     ->getOrganizationPerformance($tenantIds, $request->start, $request->end);
 
             
-            $query = $query->map(function ($row) {
+            $data_detail = $data_detail->map(function ($row) {
                 $row->omset = (int) $row->omset;
                 $row->paid = (int) $row->paid;
                 $row->invoice_create = (int) $row->invoice_create;
                 $row->registered_users = (int) $row->registered_users;
                 return $row;
             });        
-            // dd($query);
             
-            return DataTables::of($query)->make(true);
+            $data_summary = $data_detail->groupBy('tenant_site_id')->map(function ($rows) {
+                return [
+                    'tenant_site_id' => $rows->first()->tenant_site_id,
+                    'user_baru' => $rows->sum('registered_users'),
+                    'invoice_create' => $rows->sum('invoice_create'),
+                    'paid' => $rows->sum('paid'),
+                    'omset' => $rows->sum('omset'),
+                ];
+            })->values();
+            
+            return response()->json(compact('data_detail', 'data_summary'));
 
         }
 
