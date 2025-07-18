@@ -28,8 +28,11 @@ class DataController extends Controller
         return $data;
     }
 
-    public function getPendaftarCount($start_date='2024-01-01', $end_date)
+    public function getPendaftarCount($start_date, $end_date)
     {
+        $start_date = $start_date ?? '2024-01-01';
+        $end_date = $end_date ? \Carbon\Carbon::parse($end_date)->toDateString() : now()->toDateString();
+
         $data = \DB::table('users')
                 ->where([$this->q])
                 ->whereBetween('created_at', [$start_date, $end_date])
@@ -49,8 +52,11 @@ class DataController extends Controller
         return $data;
     }
 
-    public function getSalesCount($start_date='2024-01-01', $end_date)
+    public function getSalesCount($start_date, $end_date)
     {
+        $start_date = $start_date ?? '2024-01-01';
+        $end_date = $end_date ? \Carbon\Carbon::parse($end_date)->toDateString() : now()->toDateString();
+
         $data = \DB::table('affiliate_commissions')
             ->where([$this->sales_q])
             ->whereBetween('paid_at', [$start_date, $end_date])
@@ -59,8 +65,11 @@ class DataController extends Controller
         return $data;
     }
 
-    public function getSalesData($start_date='2024-01-01', $end_date)
+    public function getSalesData($start_date, $end_date)
     {
+        $start_date = $start_date ?? '2024-01-01';
+        $end_date = $end_date ? \Carbon\Carbon::parse($end_date)->toDateString() : now()->toDateString();
+
         $data = \DB::table('affiliate_commissions')
                 ->join('transactions', 'transaction_ref', 'transactions.reference')
                 ->join('users', 'transactions.user_id', 'users.user_id')
