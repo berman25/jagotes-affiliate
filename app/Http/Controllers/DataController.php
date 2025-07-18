@@ -116,7 +116,7 @@ class DataController extends Controller
                 SUM(IF(a.paid_at IS NOT NULL, COALESCE(a.amount, 0), 0)) as omset
             ')
             ->where('amount', '>', 0)
-            ->whereBetween('a.created_at', [$start_date, $end_date])
+            ->whereBetween(\DB::raw('DATE(a.created_at)'), [$start_date, $end_date])
             ->groupBy(\DB::raw('DATE(a.created_at)'), 'tenant_site_id');
 
         $sq2 = \DB::table('users')
@@ -125,7 +125,7 @@ class DataController extends Controller
                 tenant,
                 COUNT(*) as registered_users
             ')
-            ->whereBetween('created_at', [$start_date, $end_date])
+            ->whereBetween(\DB::raw('DATE(created_at)'), [$start_date, $end_date])
             ->groupBy(\DB::raw('DATE(created_at)'), 'tenant');
 
         $data = \DB::table('calendar_dates as c')
