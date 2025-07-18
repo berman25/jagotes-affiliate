@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class HomeController extends Controller
 {
@@ -12,14 +13,19 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        $pendaftar = app('App\Http\Controllers\DataController')
-            ->getPendaftarCount(null, \Carbon\Carbon::today());
-        $sales = app('App\Http\Controllers\DataController')
-            ->getSalesCount(null, \Carbon\Carbon::today());
-        $komisi = app('App\Http\Controllers\DataController')
-            ->getKomisi(null, \Carbon\Carbon::today());
+        if($request->ajax()){
+            $pendaftar = app('App\Http\Controllers\DataController')
+                ->getPendaftarCount($request->start, $request->end);
+            $sales = app('App\Http\Controllers\DataController')
+                ->getSalesCount($request->start, $request->end);
+            $komisi = app('App\Http\Controllers\DataController')
+                ->getKomisi($request->start, $request->end);
+
+            return response()->json(compact('pendaftar', 'sales', 'komisi'));
+        }
+        
         if(auth()->user()->role == 'partner'){
             $sites = \DB::table('multi_tenant_sites')
                 ->where('organization', auth()->user()->organization)
@@ -29,7 +35,7 @@ class HomeController extends Controller
             $sites = null;
         }
 
-        return view('home')->with(compact('pendaftar', 'sales', 'komisi', 'sites'));
+        return view('home')->with(compact('sites'));
     }
 
     public function pendaftar(Request $request)
@@ -94,5 +100,37 @@ class HomeController extends Controller
         return view('affiliator_performance')->with(compact('data'));
             
 
+    }
+
+    public function organizationPerformance(Request $request)
+    {      
+        $tenantIds = ["SEKDIN", "LPDP", "CPNS", "PPPK"];  
+        if($request->ajax()){
+            if($request->tenant_id){
+                $tenantIds[] = $request->tenant_id;
+            }
+
+            // if($request->start < "2025-01-01"){
+            //     $request->start = "2025-01-01";
+            // }
+
+            $query =  app('App\Http\Controllers\DataController')
+                    ->getOrganizationPerformance($tenantIds, $request->start, $request->end);
+
+            
+            $query = $query->map(function ($row) {
+                $row->omset = (int) $row->omset;
+                $row->paid = (int) $row->paid;
+                $row->invoice_create = (int) $row->invoice_create;
+                $row->registered_users = (int) $row->registered_users;
+                return $row;
+            });        
+            // dd($query);
+            
+            return DataTables::of($query)->make(true);
+
+        }
+
+        return view('organization_performance')->with(compact('tenantIds'));
     }
 }

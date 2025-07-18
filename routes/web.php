@@ -29,6 +29,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pendaftar', [App\Http\Controllers\HomeController::class, 'pendaftar'])->name('pendaftar');
     Route::get('/transaksi', [App\Http\Controllers\HomeController::class, 'transaksi'])->name('transaksi');
     Route::get('/saldo', [App\Http\Controllers\HomeController::class, 'saldo'])->name('saldo');
+    Route::get('/organization-perfomance', [App\Http\Controllers\HomeController::class, 'organizationPerformance'])->name('organization-perfomance');
+    
+    
+    
     Route::get('/account-setting', [App\Http\Controllers\HomeController::class, 'accountSetting'])->name('account-setting');
     
     Route::post('/email-verification', [App\Http\Controllers\UserController::class, 'emailVerification'])->name('email-verification');

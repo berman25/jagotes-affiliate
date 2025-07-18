@@ -8,6 +8,7 @@
   <title>Kliktes - Affiliate</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="{{ URL:: asset('assets/img/favicon.png') }}" rel="icon">
@@ -170,6 +171,12 @@
           <span>Affiliator Performance</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('organization-perfomance')}}">
+          <i class="bi bi-cash-coin"></i>
+          <span>Organization Performance</span>
+        </a>
+      </li>
       @endif
       @if (auth()->check() && auth()->user()->role == "partner")
       <li class="nav-heading">Manajemen Produk</li>
@@ -221,6 +228,13 @@
 
   <!-- Template Main JS File -->
   <script src="{{asset('assets/js/main.js')}}"></script>
+  <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  </script>
   @yield('js')
 </body>
 
