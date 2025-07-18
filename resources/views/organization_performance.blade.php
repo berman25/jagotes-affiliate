@@ -126,6 +126,8 @@
 
                 //Table Summary
                 $('#datatable-summary').DataTable({
+                    ordering: false,
+                    info: false,
                     destroy: true,
                     data: response.data_summary,
                     columns: [
