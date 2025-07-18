@@ -35,7 +35,7 @@ class DataController extends Controller
 
         $data = \DB::table('users')
                 ->where([$this->q])
-                ->whereBetween('created_at', [$start_date, $end_date])
+                ->whereBetween(\DB::raw('DATE(created_at)'), [$start_date, $end_date])
                 ->count();
 
         return $data;
@@ -59,7 +59,7 @@ class DataController extends Controller
 
         $data = \DB::table('affiliate_commissions')
             ->where([$this->sales_q])
-            ->whereBetween('paid_at', [$start_date, $end_date])
+            ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
             ->count();
 
         return $data;
@@ -75,7 +75,7 @@ class DataController extends Controller
                 ->join('users', 'transactions.user_id', 'users.user_id')
                 ->join('multi_tenant_products', 'product_id', 'multi_tenant_products.id')
                 ->where([$this->sales_q])
-                ->whereBetween('transactions.paid_at', [$start_date, $end_date])
+                ->whereBetween(\DB::raw('DATE(transactions.paid_at)'), [$start_date, $end_date])
                 ->selectRaw('users.user_id, user_name, telp, email, product_type, multi_tenant_products.name as product_name,
                     amount, fee_amount, revenue, payment_channel, commission_rate, affiliate_commissions.source, transactions.paid_at')
                 ->orderBy('transactions.paid_at', 'DESC')
