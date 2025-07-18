@@ -75,8 +75,11 @@ class DataController extends Controller
         return $data;
     }
 
-    public function getKomisi($start_date='2024-01-01', $end_date)
+    public function getKomisi($start_date, $end_date)
     {
+        $start_date = $start_date ?? '2024-01-01';
+        $end_date = $end_date ? \Carbon\Carbon::parse($end_date)->toDateString() : now()->toDateString();
+
         $commission = \DB::table('affiliate_commissions')
             ->where([$this->sales_q])
             ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
@@ -101,7 +104,7 @@ class DataController extends Controller
             ->sum('amount');
 
 
-        return $this->getKomisi(null, \Carbon\Carbon::today()) - $withdrawal;
+        return $this->getKomisi(null, null) - $withdrawal;
     }
 
     public function getOrganizationPerformance($tenantIds, $start_date, $end_date)
