@@ -234,6 +234,10 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function rupiah(x) {
+      return 'Rp. ' + x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
   </script>
   @yield('js')
 </body>

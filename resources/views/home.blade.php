@@ -153,7 +153,7 @@
           success: function(data) {
             $('#pendaftar').html(data.pendaftar)
             $('#sales').html(data.sales)
-            $('#komisi').html(data.komisi)
+            $('#komisi').html(rupiah(data.komisi))
           },
           error: function(xhr, status, error) {
             // Handle any errors that occur during the request

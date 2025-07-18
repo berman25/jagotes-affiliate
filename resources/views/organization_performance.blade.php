@@ -98,7 +98,7 @@
                 }
             },
             columns: [
-                { data: 'tgl', name: 'tgl', render: function(data, type, row, meta) {
+                { data: 'tgl', name: 'tgl', render: function(data) {
                         return moment(data).format('DD/MM/YYYY');
                     }
                 },
@@ -106,7 +106,10 @@
                 { data: 'registered_users', name: 'registered_users'  },
                 { data: 'invoice_create', name: 'invoice_create' },
                 { data: 'paid', name: 'paid'  },
-                { data: 'omset', name: 'omset'  },
+                { data: 'omset', name: 'omset', render: function(data) {
+                        return rupiah(data);
+                    }  
+                },
             ]
         });
     }
