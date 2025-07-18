@@ -79,7 +79,7 @@ class DataController extends Controller
     {
         $commission = \DB::table('affiliate_commissions')
             ->where([$this->sales_q])
-            ->whereBetween('paid_at', [$start_date, $end_date])
+            ->whereBetween(\DB::raw('DATE(paid_at)'), [$start_date, $end_date])
             ->sum(\DB::raw('revenue * commission_rate /100'));
 
         return ceil($commission);
@@ -101,7 +101,7 @@ class DataController extends Controller
             ->sum('amount');
 
 
-        return $this->getKomisi(null, \Carbon\Carbon::now()) - $withdrawal;
+        return $this->getKomisi(null, \Carbon\Carbon::today()) - $withdrawal;
     }
 
     public function getOrganizationPerformance($tenantIds, $start_date, $end_date)
