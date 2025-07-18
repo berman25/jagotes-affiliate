@@ -67,8 +67,8 @@
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
   $(document).ready(function() {
-    var start = moment().subtract(1, 'months');
-    var end = moment();
+    var start = moment().startOf('isoWeek');
+    var end = moment().endOf('isoWeek');
 
     // $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     getData(start, end)
@@ -76,9 +76,9 @@
         startDate: start,
         endDate: end,
         ranges: {
-            'Minggu Ini': [moment().subtract(1, 'days').day(1), moment()],
-            'Minggu Lalu': [moment().subtract(7, 'days').day(1), moment().subtract(7, 'days').day(7)],
-            'Bulan Ini': [moment().startOf('month'), moment()],
+            'Minggu Ini': [moment().startOf('isoWeek'), moment().endOf('isoWeek')],
+            'Minggu Lalu': [moment().subtract(1, 'weeks').startOf('isoWeek'), moment().subtract(1, 'weeks').endOf('isoWeek')],
+            'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
             'Bulan Lalu': [moment().subtract(1, 'months').startOf('month'), moment().subtract(1, 'months').endOf('month')],
             'Hari Ini': [moment(), moment()],
             'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
