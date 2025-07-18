@@ -68,7 +68,7 @@
 <script>
   $(document).ready(function() {
     var start = moment().startOf('isoWeek');
-    var end = moment().endOf('isoWeek');
+    var end = moment();
 
     // $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     getData(start, end)
@@ -76,7 +76,7 @@
         startDate: start,
         endDate: end,
         ranges: {
-            'Minggu Ini': [moment().startOf('isoWeek'), moment().endOf('isoWeek')],
+            'Minggu Ini': [moment().startOf('isoWeek'), moment()],
             'Minggu Lalu': [moment().subtract(1, 'weeks').startOf('isoWeek'), moment().subtract(1, 'weeks').endOf('isoWeek')],
             'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
             'Bulan Lalu': [moment().subtract(1, 'months').startOf('month'), moment().subtract(1, 'months').endOf('month')],
