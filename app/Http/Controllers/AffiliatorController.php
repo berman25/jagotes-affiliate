@@ -88,10 +88,9 @@ class AffiliatorController extends Controller
         }
 
         $account_existing = \DB::table('users')
-            ->where(
-                ['email' => $affiliator_acc->email],
-                ["tenant_organization" => $organization]
-            )->first();
+            ->where('email', $affiliator_acc->email)
+            ->where('tenant_organization', $organization)
+            ->first();
 
         if($account_existing){
             $user_id = $account_existing->user_id;
@@ -106,17 +105,15 @@ class AffiliatorController extends Controller
                     "user_name" => $affiliator_acc->name,
                     "telp" => $affiliator_acc->telp,
                     "referenced_by" => "AFFILIATOR_ADMIN"
-                ]);
+                ]);            
         }
-
+        
         if($organization == "JAGOTES"){
             $affiliator_acc->jagotes_kerja_acc_id = $user_id;
         }else{
             $affiliator_acc->jagotes_kuliah_acc_id = $user_id;
         }
-        
         $affiliator_acc->save();
-
         
     }
 
