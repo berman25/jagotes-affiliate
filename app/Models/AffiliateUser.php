@@ -23,7 +23,9 @@ class AffiliateUser extends Authenticatable
         'password',
         'master_password',
         'role',
-        'referral_code'
+        'referral_code',
+        'jagotes_kerja_acc_id',
+        'jagotes_kuliah_acc_id'
     ];
 
     /**
