@@ -157,7 +157,7 @@
       </li>
       @else
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('account-setting')}}">
+        <a class="nav-link collapsed" href="{{url('/affiliator-profile')}}">
           <i class="bi bi-gear"></i>
           <span>Pengaturan Akun</span>
         </a>
