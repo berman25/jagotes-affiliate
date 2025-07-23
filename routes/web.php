@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/saldo', [App\Http\Controllers\HomeController::class, 'saldo'])->name('saldo');
     Route::get('/organization-perfomance', [App\Http\Controllers\HomeController::class, 'organizationPerformance'])->name('organization-perfomance');
     
+    Route::get('/affiliator-profile/{referral_code}', [App\Http\Controllers\AffiliatorController::class, 'showUser']);
+    Route::get('/affiliator-profile', [App\Http\Controllers\AffiliatorController::class, 'showUser']);
+    
     
     
     Route::get('/account-setting', [App\Http\Controllers\HomeController::class, 'accountSetting'])->name('account-setting');

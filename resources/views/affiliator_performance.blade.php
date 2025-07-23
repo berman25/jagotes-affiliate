@@ -34,7 +34,9 @@
                         <tbody>
                         @foreach ($data as $item)
                             <tr>
-                                <td>{{$item->name}}</td>
+                                <td><a href="{{url('/affiliator-profile').'/'.$item->referral_code}}" target="_blank" rel="noopener noreferrer">{{$item->name}}</a>
+                                    
+                                </td>
                                 <td>{{$item->referral_code}}</td>                                
                                 <td>{{$item->jlh_pendaftar}}</td>
                                 <td>{{$item->jlh_trx}}</td>
