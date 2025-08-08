@@ -101,6 +101,7 @@ class DataController extends Controller
     {
         $data = \App\Models\AffiliateWithdrawal
             ::where('affiliate_id', auth()->id())
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return $data;
