@@ -2,6 +2,8 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 @stop
 @section('content')
 <div class="pagetitle">
@@ -11,7 +13,6 @@
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
-
             <div class="card">
                 <div class="card-body">
                     {{-- <h5 class="card-title">Datatables</h5>
@@ -36,7 +37,7 @@
                             <tr>
                                 <td>{{$item->user_name}}</td>
                                 <td>{{$item->telp}}</td>                                
-                                <td>{{$item->source}}</td>
+                                <td>{{$item->source}} ({{$item->source_id}})</td>
                                 {{-- <td>{{$item->email}}</td> --}}
                                 <td>{{$item->product_name}}</td>
                                 <td>@money($item->revenue) <br><span class="badge bg-primary">{{$item->payment_channel}}</span></td>
@@ -51,5 +52,36 @@
         </div>
     </div>
 </section>
-
 @stop
+@section('js')
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
+    var start = moment().subtract(1, 'days').day(1);
+    var end = moment();
+
+    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'Minggu Ini': [moment().subtract(1, 'days').day(1), moment()],
+            'Minggu Lalu': [moment().subtract(7, 'days').day(1), moment().subtract(7, 'days').day(7)],
+            'Bulan Ini': [moment().startOf('month'), moment()],
+            'Bulan Lalu': [moment().subtract(1, 'months').startOf('month'), moment().subtract(1, 'months').endOf('month')],
+            'Hari Ini': [moment(), moment()],
+            'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            // 'LifeTime': [moment("20210101", "YYYYMMDD"), moment()],        
+
+        }
+    }, getData);
+
+    function getData(){
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        new_start = start;
+        new_end = end;
+    }
+
+</script>
+@endsection
