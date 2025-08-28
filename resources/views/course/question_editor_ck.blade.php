@@ -118,7 +118,7 @@
                     </table>
 
                     <button class="btn btn-primary">submit</button>
-                    <a href="#" target="blank" class="btn btn-secondary" id="preview">preview</a>
+                    {{-- <a href="#" target="blank" class="btn btn-secondary" id="preview">preview</a> --}}
 
                 </form>
                 
@@ -237,12 +237,12 @@ $(document).ready( function($) {
         }
     });
 
-    function loadquestion(question_id){
+    function loadquestion(questionid){
         $.ajax({
             url: '{{ url("course/quiz/show-question") }}',           
             type: "get",
             data: {
-                question_id : question_id
+                questionid : questionid
             },
             success: function (data) {
                 $('#subject-name').html(data.subject_name);
@@ -291,7 +291,7 @@ $(document).ready( function($) {
                         }
                         
                         $('#score'+e.option).val(e.grade);
-                        console.log('#score'+e.option, e.grade)
+                        // console.log('#score'+e.option, e.grade)
                     });
                 }
                 
@@ -324,7 +324,7 @@ $(document).ready( function($) {
         submitHandler: function(form) {
             jQuery("#loading").show();
 
-            data = $('#formQuestion').serialize()+'&question_id='+urlParams.get('questionid')
+            data = $('#formQuestion').serialize()+'&questionid='+urlParams.get('questionid')
                         +'&description='+encodeURIComponent(editor1.getData())
                         +'&question_text='+encodeURIComponent(editor2.getData())
                         +'&question_solution='+encodeURIComponent(editor3.getData())

@@ -43,6 +43,7 @@
                                         <span class="bi bi-pencil-square"></span>
                                     </button>
 
+                                    <a href="{{route('tryout-package', ['package_id' => $item->id])}}" class="btn btn-info"><i class="bi bi-gear-fill"></i></a>
                                     <a href="{{route('tryout-participant', ['package_id' => $item->id])}}" class="btn btn-info"><i class="bi bi-people-fill"></i></a>
                                     
                                         

@@ -49,6 +49,62 @@ class TryoutController extends Controller
         return view('tryout.view')->with(compact('collection'));
     }
 
+    public function package($package_id)
+    {
+        $package = \App\Models\TryoutPackage
+            ::findOrFail($package_id);
+
+        $collection = \DB::table('utbk')
+            ->whereIn('id', $package->items)
+            ->selectRaw('id, name, is_active')
+            ->get();
+
+        return view('tryout.package')->with(compact('collection'));
+    }
+
+    public function questionsManagement($utbk_id)
+    {
+        $utbk = \DB::table('utbk')
+            ->where('id', $utbk_id)
+            ->first();
+
+        $subject = \DB::table('utbk_subject')
+            ->where('utbk_id', $utbk_id)
+            ->get();
+
+        return view('tryout.management')->with(compact(['utbk', 'subject']));
+    }
+
+    public function questionsView(Request $request, $assessment_id)
+    {        
+        $assessment = \DB::table('utbk_subject')
+            ->where('id', $assessment_id)
+            ->first();
+
+        $question_options = \DB::table('question_options')
+            ->where('grade', '>', 0)
+            ->selectRaw('question_id, 
+                        GROUP_CONCAT(question_options.option ORDER BY grade DESC ) as correct_answer')
+            ->groupBy('question_id');
+
+        $questions = \DB::table('questions')
+            ->leftJoinSub($question_options, 'question_options', function ($join) {
+                $join->on('questions.id', '=', 'question_options.question_id');
+            })
+            ->leftJoin('utbk_topics', 'topic', 'utbk_topics.id')
+            ->where('assessment_id', $assessment_id)
+            ->selectRaw('questions.*,question_options.*,topic_name')
+            ->get();
+
+        foreach($questions as $e){
+            $e->question_text =  html_entity_decode(trim(preg_replace('/\s+/', ' ', $e->question_text)));
+        }
+
+        return view('tryout.question_view')->with(compact([
+            'assessment_id', 'assessment', 'questions'
+        ]));
+    }
+
     public function participants(Request $request, $package_id)
     {        
         $tryout_package = \App\Models\TryoutPackage

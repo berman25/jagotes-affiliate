@@ -11,5 +11,6 @@ class TryoutPackage extends Model
 
     protected $casts = [
         'sidebar_info' => 'array',
+        'items' => 'array',
     ];
 }

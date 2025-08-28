@@ -81,22 +81,31 @@ class CourseQuizController extends Controller
 
     public function showQuestion(Request $request)
     {
+        if(auth()->user()->role != "partner"){
+            return abort(403, 'Unauthorized action.');
+        }
+
+        $question = \DB::table('questions')
+            ->where('id', $request->questionid)
+            ->first();
+
+        if($question->created_by != auth()->user()->organization){
+            return abort(403, 'Unauthorized action.');
+        }
+
         if(request()->ajax()){
-            $question = \DB::table('questions')
-                    ->where('id', $request->question_id)
-                    ->first();
 
             $assessment_id = $question->assessment_id;
             $subject_name = \DB::table('course_quiz')
                 ->where('id', $assessment_id)
-                ->first()->name;
+                ->first()->name ?? null;
 
             $question->description = html_entity_decode($question->description);
             $question->question_text = html_entity_decode($question->question_text);
             $question->question_solution = html_entity_decode($question->question_solution);
 
             $options = \DB::table('question_options')
-                        ->where('question_id', $request->question_id)
+                        ->where('question_id', $request->questionid)
                         ->get();            
 
             foreach($options as $e){
@@ -158,17 +167,25 @@ class CourseQuizController extends Controller
 
     public function updateQuestion(Request $request)
     {
+        $question = \DB::table('questions')
+            ->where('id', $request->questionid)
+            ->first();
+
+        if($question->created_by != auth()->user()->organization){
+            return abort(403, 'Unauthorized action.');
+        }
+
         \DB::table('question_options')
-            ->where('question_id', $request->question_id)
+            ->where('question_id', $request->questionid)
             ->delete();
 
         if(!empty($request->optiona)){
             \DB::table('question_options')
                 ->updateOrInsert([
-                    'question_id' => $request->question_id,
+                    'question_id' => $request->questionid,
                     'option' => 'a'
                 ],[
-                    'text' => $this->dataready($request->optiona, $request->question_id),
+                    'text' => $this->dataready($request->optiona, $request->questionid),
                     'is_true' => $request->scorea ? 1 : 0,
                     'grade' => $request->scorea
                 ]);
@@ -177,10 +194,10 @@ class CourseQuizController extends Controller
         if(!empty($request->optionb)){
             \DB::table('question_options')
                 ->updateOrInsert([
-                    'question_id' => $request->question_id,
+                    'question_id' => $request->questionid,
                     'option' => 'b'
                 ],[
-                    'text' => $this->dataready($request->optionb, $request->question_id),
+                    'text' => $this->dataready($request->optionb, $request->questionid),
                     'is_true' => $request->scoreb ? 1 : 0,
                     'grade' => $request->scoreb
                 ]);
@@ -189,10 +206,10 @@ class CourseQuizController extends Controller
         if(!empty($request->optionc)){
             \DB::table('question_options')
                 ->updateOrInsert([
-                    'question_id' => $request->question_id,
+                    'question_id' => $request->questionid,
                     'option' => 'c'
                 ],[
-                    'text' => $this->dataready($request->optionc, $request->question_id),
+                    'text' => $this->dataready($request->optionc, $request->questionid),
                     'is_true' => $request->scorec ? 1 : 0,
                     'grade' => $request->scorec
                 ]);
@@ -201,10 +218,10 @@ class CourseQuizController extends Controller
         if(!empty($request->optiond)){
             \DB::table('question_options')
                 ->updateOrInsert([
-                    'question_id' => $request->question_id,
+                    'question_id' => $request->questionid,
                     'option' => 'd'
                 ],[
-                    'text' => $this->dataready($request->optiond, $request->question_id),
+                    'text' => $this->dataready($request->optiond, $request->questionid),
                     'is_true' => $request->scored ? 1 : 0,
                     'grade' => $request->scored
                 ]);
@@ -213,32 +230,32 @@ class CourseQuizController extends Controller
         if(!empty($request->optione)){
             \DB::table('question_options')
                 ->updateOrInsert([
-                    'question_id' => $request->question_id,
+                    'question_id' => $request->questionid,
                     'option' => 'e'
                 ],[
-                    'text' => $this->dataready($request->optione, $request->question_id),
+                    'text' => $this->dataready($request->optione, $request->questionid),
                     'is_true' => $request->scoree ? 1 : 0,
                     'grade' => $request->scoree
                 ]);
         }
 
         $answer_key = \DB::table('question_options')
-            ->where('question_id', $request->question_id)
+            ->where('question_id', $request->questionid)
             ->where('is_true', 1)
             ->selectRaw("GROUP_CONCAT(question_options.option) as ak")
             ->first();
         
         \DB::table('questions')
-            ->where('id', $request->question_id)
+            ->where('id', $request->questionid)
             ->update([
                 'name' => $request->name,
-                'description' => $this->dataready($request->description, $request->question_id),
-                'question_text' => $this->dataready($request->question_text, $request->question_id),
-                'question_solution' => $this->dataready($request->question_solution, $request->question_id),
+                'description' => $this->dataready($request->description, $request->questionid),
+                'question_text' => $this->dataready($request->question_text, $request->questionid),
+                'question_solution' => $this->dataready($request->question_solution, $request->questionid),
                 'video_solution' => $request->video_solution,
                 'answer_key' => $answer_key ? $answer_key->ak : null
             ]);
 
-        return response()->json($request->question_id);
+        return response()->json($request->questionid);
     }
 }

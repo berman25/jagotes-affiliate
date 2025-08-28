@@ -82,6 +82,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tryout/view', [App\Http\Controllers\TryoutController::class, 'view'])->name('tryout-view');
     Route::put('/tryout/update/{package_id}', [App\Http\Controllers\TryoutController::class, 'update'])->name('tryout.update');
     Route::get('/tryout/participant/{package_id}', [App\Http\Controllers\TryoutController::class, 'participants'])->name('tryout-participant');
+    Route::get('/tryout/package/{package_id}', [App\Http\Controllers\TryoutController::class, 'package'])->name('tryout-package');
+    Route::get('/tryout/question-management/{utbk_id}', [App\Http\Controllers\TryoutController::class, 'questionsManagement'])->name('tryout.question-management');
+    Route::get('/tryout/question-view/{assessment_id}', [App\Http\Controllers\TryoutController::class, 'questionsView'])->name('tryout.question-view');
+    
+    
     Route::post('/assign-user', [App\Http\Controllers\TryoutController::class, 'assignUser'])->name('assign-user');
     
 });
