@@ -54,6 +54,10 @@ class TryoutController extends Controller
         $package = \App\Models\TryoutPackage
             ::findOrFail($package_id);
 
+        if($package->created_by != auth()->user()->organization){
+            return abort(403, 'Unauthorized action.');
+        }
+
         $collection = \DB::table('utbk')
             ->whereIn('id', $package->items)
             ->selectRaw('id, name, is_active')
