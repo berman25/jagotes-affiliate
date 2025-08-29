@@ -68,6 +68,10 @@ class TryoutController extends Controller
             ->where('id', $utbk_id)
             ->first();
 
+        if($utbk->created_by != auth()->user()->organization){
+            return abort(403, 'Unauthorized action.');
+        }
+
         $subject = \DB::table('utbk_subject')
             ->where('utbk_id', $utbk_id)
             ->get();
@@ -80,6 +84,10 @@ class TryoutController extends Controller
         $assessment = \DB::table('utbk_subject')
             ->where('id', $assessment_id)
             ->first();
+
+        if($assessment->created_by != auth()->user()->organization){
+            return abort(403, 'Unauthorized action.');
+        }
 
         $question_options = \DB::table('question_options')
             ->where('grade', '>', 0)
