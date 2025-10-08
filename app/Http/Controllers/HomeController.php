@@ -104,7 +104,7 @@ class HomeController extends Controller
 
     public function organizationPerformance(Request $request)
     {      
-        $tenantIds = ["SEKDIN", "LPDP", "CPNS", "PPPK"];  
+        $tenantIds = ["SEKDIN", "LPDP", "CPNS", "PPPK", "skd_bumn", "tryout-goptn"];  
         if($request->ajax()){
             if($request->tenant_id){
                 $tenantIds[] = $request->tenant_id;
