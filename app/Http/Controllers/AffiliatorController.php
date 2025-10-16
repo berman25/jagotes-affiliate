@@ -49,6 +49,9 @@ class AffiliatorController extends Controller
 
     public function getMasaAktif($site_id, $user_id)
     {       
+        if($site_id = "BUMN"){
+            $site_id = "SKD_BUMN";
+        }
         
         $data = \DB::table('transactions')
             ->join('multi_tenant_products', 'multi_tenant_products.id', 'transactions.product_id')
@@ -119,6 +122,10 @@ class AffiliatorController extends Controller
 
     public function addMasaAktif($user_id, $tenant_site_id)
     {
+        if($tenant_site_id = "BUMN"){
+            $tenant_site_id = "SKD_BUMN";
+        }
+        
         $product = \DB::table('multi_tenant_products')
             ->where('tenant_site_id', $tenant_site_id)
             ->where('product_type', 'subscription')
