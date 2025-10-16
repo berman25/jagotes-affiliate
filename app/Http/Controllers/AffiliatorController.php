@@ -49,7 +49,7 @@ class AffiliatorController extends Controller
 
     public function getMasaAktif($site_id, $user_id)
     {       
-        if($site_id = "BUMN"){
+        if($site_id == "BUMN"){
             $site_id = "SKD_BUMN";
         }
         
@@ -122,7 +122,7 @@ class AffiliatorController extends Controller
 
     public function addMasaAktif($user_id, $tenant_site_id)
     {
-        if($tenant_site_id = "BUMN"){
+        if($tenant_site_id == "BUMN"){
             $tenant_site_id = "SKD_BUMN";
         }
         
