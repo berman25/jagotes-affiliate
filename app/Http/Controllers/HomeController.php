@@ -104,7 +104,7 @@ class HomeController extends Controller
 
     public function organizationPerformance(Request $request)
     {      
-        $tenantIds = ["SEKDIN", "LPDP", "CPNS", "PPPK", "skd_bumn", "tryout-goptn"];  
+        $tenantIds = ["SEKDIN", "LPDP", "CPNS", "PPPK", "skd_bumn"];  
         if($request->ajax()){
             if($request->tenant_id){
                 $tenantIds[] = $request->tenant_id;
@@ -141,5 +141,16 @@ class HomeController extends Controller
         }
 
         return view('organization_performance')->with(compact('tenantIds'));
+    }
+
+    public function freeTryoutPerformance(Request $request)
+    {
+        $blueprint = ["SEKDIN", "LPDP", "CPNS", "PPPK", "BUMN"];
+
+        $data =  app('App\Http\Controllers\DataController')
+            ->getFreeTryoutPerformance($blueprint);
+
+        return view('free_to')->with(compact('data'));
+
     }
 }

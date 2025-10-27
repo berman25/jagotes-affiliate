@@ -177,6 +177,12 @@
           <span>Organization Performance</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('free-to-perfomance')}}">
+          <i class="bi bi-cash-coin"></i>
+          <span>Free TO Performance</span>
+        </a>
+      </li>
       @endif
       @if (auth()->check() && auth()->user()->role == "partner")
       <li class="nav-heading">Manajemen Produk</li>

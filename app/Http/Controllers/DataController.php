@@ -169,5 +169,30 @@ class DataController extends Controller
         return $data;
     }
 
+    public function getFreeTryoutPerformance($blueprint)
+    {        
+        $free_tryout = \DB::table('utbk')
+            ->where('is_free', 1)
+            ->where('is_active', 1)
+            ->whereIn('blueprint', $blueprint)
+            ->selectRaw('id, name, utbk.group');
+
+        $data = \DB::table('jagotes_tryout_participants')
+            ->joinSub($free_tryout, 'free_tryout', function ($join) {
+                $join->on('free_tryout.id', '=', 'tryout_id');
+            })
+            ->join('users', 'users.user_id', 'jagotes_tryout_participants.user_id')
+            ->whereNotNull('first_attempt_id')
+            ->selectRaw('free_tryout.*, tenant_organization, count(0) as jlh_participant, 
+                        max(first_attempt_score) as max_score, 
+                        avg(first_attempt_score) as avg_score, 
+                        min(first_attempt_score) as min_score')
+            ->orderBy('tryout_id', 'desc')
+            ->groupBy('tryout_id', 'tenant_organization')
+            ->get();
+
+        return $data;
+    }
+
     
 }
