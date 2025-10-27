@@ -35,11 +35,11 @@
                                 <td>
                                     <p>Daftar: {{$item->jlh_register}}</p>
                                     <p>Mengerjakan: {{$item->jlh_submit}}</p>
-                                    <p>%: {{ number_format($item->jlh_submit*100/$item->jlh_register, 2) }}</p>
+                                    <p>%: {{ $item->jlh_register ? number_format($item->jlh_submit*100/$item->jlh_register, 2) : "-" }}</p>
                                 </td>
                                 <td>
                                     <p>Premium: {{$item->jlh_premium}}</p>
-                                    <p>%: {{ number_format($item->jlh_premium*100/$item->jlh_submit, 2) }}</p>
+                                    <p>%: {{ $item->jlh_submit ? number_format($item->jlh_premium*100/$item->jlh_submit, 2) : "-" }}</p>
                                 </td>
                                 <td>       
                                     <p>Max: {{ number_format($item->max_score, 2) }}</p>
