@@ -1,10 +1,8 @@
 @extends('layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('css')
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 @stop
 @section('content')
 
@@ -19,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Summary</h5>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="data-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -54,3 +52,23 @@
 
 
 @stop
+@section('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
+  $(document).ready(function() {
+
+    $('#data-table').DataTable({
+        iDisplayLength: 25,
+        ordering: false
+        "autoWidth": false,
+        "columnDefs": [
+            { "width": "200px", "targets": 0 }
+        ]
+    });
+});
+
+</script>
+@endsection
