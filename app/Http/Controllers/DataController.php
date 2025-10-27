@@ -183,8 +183,9 @@ class DataController extends Controller
             })
             ->join('users', 'users.user_id', 'jagotes_tryout_participants.user_id')
             ->selectRaw('free_tryout.*, tenant_organization, 
-                        count(first_attempt_score) as jlh_submit, 
                         count(0) as jlh_register, 
+                        count(first_attempt_score) as jlh_submit, 
+                        count(case when tier > 0 then 1 end) as jlh_premium,
                         max(first_attempt_score) as max_score, 
                         avg(first_attempt_score) as avg_score, 
                         min(first_attempt_score) as min_score')

@@ -21,22 +21,25 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Group</th>
                                 <th>Organisasi</th>
                                 <th>Jumlah</th>
+                                <th>Premium</th>
                                 <th>Skor</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach ($data as $item)
                             <tr>
-                                <td>{{$item->name}}</td>
-                                <td>{{$item->group}}</td>
+                                <td>{{$item->name}} - {{$item->group}}</td>
                                 <td>{{$item->tenant_organization}}</td>
                                 <td>
                                     <p>Daftar: {{$item->jlh_register}}</p>
                                     <p>Mengerjakan: {{$item->jlh_submit}}</p>
-                                    <p>Persentasi: {{ number_format($item->jlh_submit*100/$item->jlh_register, 2) }} %</p>
+                                    <p>%: {{ number_format($item->jlh_submit*100/$item->jlh_register, 2) }}</p>
+                                </td>
+                                <td>
+                                    <p>Premium: {{$item->jlh_premium}}</p>
+                                    <p>%: {{ number_format($item->jlh_submit*100/$item->jlh_register, 2) }}</p>
                                 </td>
                                 <td>       
                                     <p>Max: {{ number_format($item->max_score, 2) }}</p>
@@ -66,10 +69,10 @@
 
     $('#data-table').DataTable({
         iDisplayLength: 25,
-        ordering: false
-        "autoWidth": false,
-        "columnDefs": [
-            { "width": "200px", "targets": 0 }
+        ordering: false,
+        autoWidth: false,
+        columnDefs: [
+            { "width": "30%", "targets": 0 }
         ]
     });
 });
