@@ -39,7 +39,7 @@
                                 </td>
                                 <td>
                                     <p>Premium: {{$item->jlh_premium}}</p>
-                                    <p>%: {{ number_format($item->jlh_submit*100/$item->jlh_register, 2) }}</p>
+                                    <p>%: {{ number_format($item->jlh_premium*100/$item->jlh_submit, 2) }}</p>
                                 </td>
                                 <td>       
                                     <p>Max: {{ number_format($item->max_score, 2) }}</p>
