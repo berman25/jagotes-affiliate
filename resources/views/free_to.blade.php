@@ -23,7 +23,7 @@
                                 <th>Name</th>
                                 <th>Group</th>
                                 <th>Organisasi</th>
-                                <th>Jumlah Peserta</th>
+                                <th>Jumlah</th>
                                 <th>Skor</th>
                             </tr>
                         </thead>
@@ -33,7 +33,11 @@
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->group}}</td>
                                 <td>{{$item->tenant_organization}}</td>
-                                <td>{{$item->jlh_participant}}</td>
+                                <td>
+                                    <p>Daftar: {{$item->jlh_register}}</p>
+                                    <p>Mengerjakan: {{$item->jlh_submit}}</p>
+                                    <p>Persentasi: {{ number_format($item->jlh_submit*100/$item->jlh_register, 2) }} %</p>
+                                </td>
                                 <td>       
                                     <p>Max: {{ number_format($item->max_score, 2) }}</p>
                                     <p>Avg: {{ number_format($item->avg_score, 2) }}</p>
