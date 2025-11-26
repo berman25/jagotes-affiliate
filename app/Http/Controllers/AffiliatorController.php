@@ -24,7 +24,7 @@ class AffiliatorController extends Controller
             $this->generateJagotesAcc("GOPTN", $data);
         }
 
-        $tenantIds = ["CPNS", "PPPK", "BUMN", "LPDP"];
+        $tenantIds = ["OJK","CPNS", "PPPK", "BUMN", "LPDP"];
         foreach($tenantIds as $row){
             $duration_remaining = $this->getMasaAktif($row, $data->jagotes_kerja_acc_id);
             if($duration_remaining <=0 ){
