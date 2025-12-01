@@ -145,7 +145,7 @@ class HomeController extends Controller
 
     public function freeTryoutPerformance(Request $request)
     {
-        $blueprint = ["SEKDIN", "LPDP", "CPNS", "PPPK", "BUMN"];
+        $blueprint = ["OJK","SEKDIN", "SNBT", "LPDP", "CPNS", "PPPK", "BUMN"];
 
         $data =  app('App\Http\Controllers\DataController')
             ->getFreeTryoutPerformance($blueprint);
