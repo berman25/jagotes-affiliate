@@ -35,7 +35,11 @@ class HomeController extends Controller
             $sites = null;
         }
 
-        return view('home')->with(compact('sites'));
+        $timeDimensions = \DB::table('affiliate_time_dimensions')
+            ->where('start_date', '<', \Carbon\Carbon::now())
+            ->orderBy('start_date', 'desc')->get();
+
+        return view('page.overview.main')->with(compact('sites','timeDimensions'));
     }
 
     public function pendaftar(Request $request)
@@ -73,12 +77,15 @@ class HomeController extends Controller
             ->getWithdrawalData(null, \Carbon\Carbon::today());
         $saldo = app('App\Http\Controllers\DataController')
             ->getRemainingSaldo();
+            
+        $pending_saldo = app('App\Http\Controllers\DataController')
+            ->getPendingSaldo();
 
         $bank_account = \DB::table('affiliate_bank_accounts')
             ->where('affiliate_id', auth()->id())
             ->get();
 
-        return view('saldo')->with(compact('data', 'saldo', 'bank_account'));
+        return view('saldo')->with(compact('data', 'saldo', 'bank_account', 'pending_saldo'));
     }
 
     public function accountSetting(Request $request)

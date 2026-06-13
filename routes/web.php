@@ -15,13 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-Route::get('/u/{referral_code}', function ($referral_code) {
-    $user = \App\Models\AffiliateUser
-        ::where('referral_code', $referral_code)
-        ->firstOrFail();
-
-        return view('linktree')->with(compact('user')); 
-});
+Route::get('/u/{referral_code}', [App\Http\Controllers\UserController::class, 'linkTree']);
+    
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -32,7 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/organization-perfomance', [App\Http\Controllers\HomeController::class, 'organizationPerformance'])->name('organization-perfomance');
     Route::get('/free-to-perfomance', [App\Http\Controllers\HomeController::class, 'freeTryoutPerformance'])->name('free-to-perfomance');
     
-
+    Route::get('/affiliator-performance/overview', [App\Http\Controllers\DataController::class, 'affiliatorPerformanceOverview'])->name('affiliator-performance-overview');
+    
 
 
 
@@ -42,6 +38,10 @@ Route::group(['middleware' => ['auth']], function () {
     
     
     Route::get('/account-setting', [App\Http\Controllers\HomeController::class, 'accountSetting'])->name('account-setting');
+    
+    Route::get('/biolink/u/{referral_code}', [App\Http\Controllers\LinkTreeController::class, 'showPublicBiolink']);
+    Route::get('/biolink/settings', [App\Http\Controllers\LinkTreeController::class, 'settings']);
+    Route::put('/biolink/save-settings', [App\Http\Controllers\LinkTreeController::class, 'saveSettings'])->name('affiliate.biolink.save');
     
     Route::post('/email-verification', [App\Http\Controllers\UserController::class, 'emailVerification'])->name('email-verification');
     Route::post('/add-bank-account', [App\Http\Controllers\UserController::class, 'AddBankAccount'])->name('add-bank-account');

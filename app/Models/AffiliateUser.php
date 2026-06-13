@@ -12,11 +12,7 @@ class AffiliateUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    
     protected $fillable = [
         'name',
         'email',
@@ -25,25 +21,17 @@ class AffiliateUser extends Authenticatable
         'role',
         'referral_code',
         'jagotes_kerja_acc_id',
-        'jagotes_kuliah_acc_id'
+        'jagotes_kuliah_acc_id',
+        'linktree_sort'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'linktree_sort' => 'array', 
     ];
 }

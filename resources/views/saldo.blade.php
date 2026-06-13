@@ -15,6 +15,7 @@
 <section class="section">
     <div class="row">
         <!-- Affiliate Link Card -->
+         @if (auth()->check() && auth()->user()->role == "partner")
         <div class="col-xxl-4 col-xl-12">
             <div class="card info-card">
                 <div class="card-body">
@@ -29,12 +30,40 @@
             </div>
         </div>
         <!-- End Affiliate Link Card -->
+        @else
+        <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card">
+                <div class="card-body">
+                    <h5 class="card-title">Saldo Tersedia</h5>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h2>@money($saldo)</h2> 
+                        {{-- <button class="btn btn-primary" id="withdrawalBtn">Tarik Dana</button> --}}
+                    </div>                    
 
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card">
+                <div class="card-body">
+                    <h5 class="card-title">Saldo Pending</h5>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h2>@money($pending_saldo)</h2> 
+                        {{-- <button class="btn btn-primary" id="withdrawalBtn">Tarik Dana</button> --}}
+                    </div>                    
+
+                </div>
+            </div>
+        </div>
+
+        @endif
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Riwayat Penarikan</h5>
-                    <table class="table datatable">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Tanggal</th>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Kliktes - Affiliate</title>
+  <title>Jagotes Business</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -48,7 +48,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <link href="{{asset('assets/img/logo.png')}}" rel="icon">
-        <span class="d-none d-lg-block">kliktes</span>
+        <span class="d-none d-lg-block">Jagotes Partnership</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -119,13 +119,17 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('home')}}">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>Overview</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End Dashboard Nav -->       
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('saldo')}}">
+          <i class="bi bi-wallet"></i>
+          <span>Saldo</span>
+        </a>
+      </li>
 
-
-      <li class="nav-heading">Menu Utama</li>      
-
+      @if (auth()->check() && auth()->user()->role == "partner")
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('pendaftar')}}">
           <i class="bi bi-people"></i>
@@ -139,16 +143,9 @@
           <span>Transaksi</span>
         </a>
       </li>  
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('saldo')}}">
-          <i class="bi bi-wallet"></i>
-          <span>Saldo</span>
-        </a>
-      </li>
 
       <li class="nav-heading">Konfigurasi Tampilan</li> 
       
-      @if (auth()->check() && auth()->user()->role == "partner")
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('site-setting')}}">
           <i class="bi bi-gear"></i>
