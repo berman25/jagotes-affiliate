@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-Route::get('/u/{referral_code}', [App\Http\Controllers\UserController::class, 'linkTree']);
+Route::get('/u/{referral_code}', [App\Http\Controllers\LinkTreeController::class, 'showPublicBiolink']);
     
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
@@ -39,7 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::get('/account-setting', [App\Http\Controllers\HomeController::class, 'accountSetting'])->name('account-setting');
     
-    Route::get('/u/{referral_code}', [App\Http\Controllers\LinkTreeController::class, 'showPublicBiolink']);
     Route::get('/biolink/settings', [App\Http\Controllers\LinkTreeController::class, 'settings']);
     Route::put('/biolink/save-settings', [App\Http\Controllers\LinkTreeController::class, 'saveSettings'])->name('affiliate.biolink.save');
     
