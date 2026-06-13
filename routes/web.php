@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::get('/account-setting', [App\Http\Controllers\HomeController::class, 'accountSetting'])->name('account-setting');
     
-    Route::get('/biolink/u/{referral_code}', [App\Http\Controllers\LinkTreeController::class, 'showPublicBiolink']);
+    Route::get('/u/{referral_code}', [App\Http\Controllers\LinkTreeController::class, 'showPublicBiolink']);
     Route::get('/biolink/settings', [App\Http\Controllers\LinkTreeController::class, 'settings']);
     Route::put('/biolink/save-settings', [App\Http\Controllers\LinkTreeController::class, 'saveSettings'])->name('affiliate.biolink.save');
     
