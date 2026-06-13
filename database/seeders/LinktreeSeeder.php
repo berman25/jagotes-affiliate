@@ -274,7 +274,7 @@ class LinktreeSeeder extends Seeder
             unset($cat['links']);
 
             $categoryId = DB::table('linktree_categories')->insertGetId(array_merge($cat, [
-                'linktree_profile_id' => $profileId,
+                'linktree_profile_id' => 1,
                 'is_active'           => true,
                 'created_at'          => $now,
                 'updated_at'          => $now,
