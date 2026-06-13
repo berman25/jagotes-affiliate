@@ -12,22 +12,7 @@ class LinktreeSeeder extends Seeder
     {
         $now = Carbon::now();
 
-        // ── 1. PROFILE ────────────────────────────────────────────────────────
-        $profileId = DB::table('linktree_profiles')->insertGetId([
-            'name'       => 'Jagotes Official',
-            'tagline'    => 'Solusi Lengkap Persiapan Karir Impianmu 🚀',
-            'logo_url'   => asset('assets/img/logo.png'),
-            'socials'    => json_encode([
-                ['platform' => 'instagram', 'url' => 'https://instagram.com/jagotes.id'],
-                ['platform' => 'whatsapp',  'url' => 'https://wa.me/6281234567890'],
-                ['platform' => 'tiktok',    'url' => 'https://tiktok.com/@jagotes.id'],
-                ['platform' => 'facebook',  'url' => 'https://facebook.com/jagotes.id'],
-            ]),
-            'is_active'  => true,
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
-
+        
         // ── 2. CATEGORIES + LINKS ─────────────────────────────────────────────
         $categories = [
 
@@ -55,7 +40,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '⭐',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 2,
                     ],
                     [
@@ -75,7 +60,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '💬',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 4,
                     ],
                     [
@@ -85,7 +70,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '✈️',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 5,
                     ],
                 ],
@@ -115,7 +100,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '⭐',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 2,
                     ],
                     [
@@ -135,7 +120,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '💬',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 4,
                     ],
                     [
@@ -145,7 +130,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '✈️',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 5,
                     ],
                 ],
@@ -175,7 +160,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '⭐',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 2,
                     ],
                     [
@@ -195,7 +180,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '💬',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 4,
                     ],
                     [
@@ -205,7 +190,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '✈️',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 5,
                     ],
                 ],
@@ -235,7 +220,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '⭐',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 2,
                     ],
                     [
@@ -255,7 +240,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '🌐',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 4,
                     ],
                     [
@@ -265,7 +250,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '💬',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 5,
                     ],
                     [
@@ -275,7 +260,7 @@ class LinktreeSeeder extends Seeder
                         'thumbnail_url'   => null,
                         'icon_emoji'      => '✈️',
                         'open_in_new_tab' => true,
-                        'is_active'       => true,
+                        'is_active'       => false,
                         'sort_order'      => 6,
                     ],
                 ],
