@@ -8,9 +8,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ $profile->tagline ?? 'Jagotes – Platform Belajar Tes CPNS, PPPK & LPDP' }}">
-    <title>{{ $profile->name ?? 'Jagotes' }}</title>
-
+    <meta name="description" content="Platform Tryout dan Bimbel CPNS, PPPK, SEKDIN, LPDP paling mirip dengan tes Asli">
+    <title>Jagotes Bio Link</title>
+    <link rel="icon" type="image/x-icon" href="https://jagotes.s3.ap-southeast-1.amazonaws.com/images/logo+web.png">
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -387,23 +387,15 @@
 
         {{-- Logo / Avatar --}}
         <div class="lt-logo-ring">
-            @if($profile->logo_url)
-                <img src="{{ $profile->logo_url }}"
-                     alt="{{ $profile->name }} logo"
-                     loading="eager">
-            @else
-                <span class="lt-logo-fallback">
-                    {{ strtoupper(substr($profile->name ?? 'J', 0, 1)) }}
-                </span>
-            @endif
+            <img src="https://jagotes.s3.ap-southeast-1.amazonaws.com/images/logo+web.png"
+                alt="logo-jagotes"
+                loading="eager">
         </div>
 
         {{-- Name & Tagline --}}
-        <h1 class="lt-name">{{ $profile->name ?? 'Jagotes' }}</h1>
+        <h1 class="lt-name">JAGOTES</h1>
 
-        @if($profile->tagline)
-            <p class="lt-tagline">{{ $profile->tagline }}</p>
-        @endif
+        <p class="lt-tagline">Platform Tryout dan Bimbel CPNS, PPPK, SEKDIN, LPDP paling mirip dengan tes Asli</p>
 
         {{-- Social Links --}}
         @if($profile->socials && count($profile->socials))
@@ -519,13 +511,7 @@
         @endforelse
     </main>
 
-    {{-- ── FOOTER ──────────────────────────────────────────── --}}
-    <footer class="lt-footer">
-        <a href="https://jagotes.com" class="lt-footer-brand" target="_blank" rel="noopener noreferrer">
-            <span class="lt-footer-dot" aria-hidden="true"></span>
-            <span class="lt-footer-text">Dibuat dengan ❤ oleh <span>jagotes.com</span></span>
-        </a>
-    </footer>
+    
 
 </div>
 
