@@ -400,6 +400,10 @@
                 return v.toString(16);
             });
         }
+        // Ambil data konseptual dari Laravel Backend
+        const trackingUrl = "{{ route('linktree.track') }}";
+        const affiliatorId = "{{ $profile->referral_code }}"; // Tipe text/varchar referral code
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
 
         // 2. Cek status Unique Visitor (New vs Returning)
         let localStorageKey = 'jg_tracker_id_' + affiliatorId; // Gabungkan token dengan referral code
@@ -412,10 +416,7 @@
             localStorage.setItem(localStorageKey, visitorToken); // Simpan menggunakan kunci unik tadi
         }
 
-        // Ambil data konseptual dari Laravel Backend
-        const trackingUrl = "{{ route('linktree.track') }}";
-        const affiliatorId = "{{ $profile->referral_code }}"; // Tipe text/varchar referral code
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+        
 
         // ----------------------------------------------------
         // EVENT 1: TRACK PAGE VIEW (Saat User Buka Halaman)
