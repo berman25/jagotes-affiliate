@@ -402,13 +402,14 @@
         }
 
         // 2. Cek status Unique Visitor (New vs Returning)
-        let visitorToken = localStorage.getItem('jg_tracker_id');
+        let localStorageKey = 'jg_tracker_id_' + affiliatorId; // Gabungkan token dengan referral code
+        let visitorToken = localStorage.getItem(localStorageKey);
         let isNew = 0;
 
         if (!visitorToken) {
-            isNew = 1;
+            isNew = 1; // Otomatis jadi user baru jika kode referral di atas belum pernah tersimpan
             visitorToken = generateUUID();
-            localStorage.setItem('jg_tracker_id', visitorToken);
+            localStorage.setItem(localStorageKey, visitorToken); // Simpan menggunakan kunci unik tadi
         }
 
         // Ambil data konseptual dari Laravel Backend
