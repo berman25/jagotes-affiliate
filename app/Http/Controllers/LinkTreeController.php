@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class LinkTreeController extends Controller
 {
@@ -70,5 +72,39 @@ class LinkTreeController extends Controller
         })->values();
 
         return view('linktree', compact('profile', 'categories'));
+    }
+
+    public function trackAnalytics(Request $request)
+    {
+        // Hilangkan (int) agar tetap menjadi Varchar/String
+        $affiliatorId = $request->input('affiliator_id'); 
+        $visitorToken = $request->input('visitor_token');
+        $isNew        = $request->input('is_new') == '1';
+        
+        // Tangkap parameter event baru
+        $eventType    = $request->input('event_type', 'page_view');
+        $linkUrl      = $request->input('link_url', null);
+
+        $supabaseUrl = config('services.supabase.url') . '/rest/v1/rpc/track_linktree_visit';
+        $supabaseKey = config('services.supabase.key');
+
+        try {
+            Http::withHeaders([
+                'apikey'        => $supabaseKey,
+                'Authorization' => 'Bearer ' . $supabaseKey,
+                'Content-Type'  => 'application/json',
+            ])->post($supabaseUrl, [
+                'p_affiliator_id' => (string) $affiliatorId, // Dikirim sebagai text/string
+                'p_visitor_token' => (string) $visitorToken,
+                'p_is_new'        => (bool) $isNew,
+                'p_date'          => now()->toDateString(),
+                'p_event_type'    => (string) $eventType,
+                'p_link_url'      => $linkUrl,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Gagal mengirim tracking ke Supabase: ' . $e->getMessage());
+        }
+
+        return response()->json(['status' => 'ok']);
     }
 }

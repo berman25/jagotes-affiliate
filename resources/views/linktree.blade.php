@@ -6,6 +6,10 @@
     <meta name="description" content="Platform Tryout dan Bimbel CPNS, PPPK, SEKDIN, LPDP paling mirip dengan tes Asli">
     <title>Jagotes Bio Link</title>
     <link rel="icon" type="image/x-icon" href="https://jagotes.s3.ap-southeast-1.amazonaws.com/images/logo+web.png">
+    
+    {{-- Meta CSRF Token untuk backup keamanan request --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -109,13 +113,6 @@
             border-radius: 50%;
         }
 
-        .lt-logo-ring .lt-logo-fallback {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--c-teal-deep);
-            letter-spacing: -1px;
-        }
-
         .lt-name {
             font-size: 22px;
             font-weight: 800;
@@ -131,37 +128,6 @@
             line-height: 1.5;
             max-width: 280px;
             margin: 0 auto 20px;
-        }
-
-        /* Social icons row */
-        .lt-socials {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 4px;
-        }
-
-        .lt-social-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--c-surface);
-            border: 1px solid var(--c-border);
-            color: var(--c-white);
-            text-decoration: none;
-            transition: background var(--transition), transform var(--transition);
-        }
-        .lt-social-btn:hover {
-            background: var(--c-surface-hover);
-            transform: translateY(-2px);
-        }
-        .lt-social-btn svg {
-            width: 17px;
-            height: 17px;
-            fill: currentColor;
         }
 
         /* ─── Category Section ──────────────────────────────── */
@@ -325,43 +291,6 @@
             padding-top: 40px;
         }
 
-        .lt-footer-brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 8px 18px;
-            border-radius: var(--radius-pill);
-            background: var(--c-surface);
-            border: 1px solid var(--c-border);
-            text-decoration: none;
-            transition: background var(--transition);
-        }
-        .lt-footer-brand:hover {
-            background: var(--c-surface-hover);
-        }
-
-        .lt-footer-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--c-gold);
-            animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50%       { transform: scale(1.35); opacity: 0.7; }
-        }
-
-        .lt-footer-text {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--c-text-muted);
-            letter-spacing: 0.2px;
-        }
-        .lt-footer-text span {
-            color: var(--c-gold);
-        }
-
         /* ─── Responsive tweaks ─────────────────────────────── */
         @media (min-width: 520px) {
             .lt-name    { font-size: 24px; }
@@ -379,27 +308,16 @@
 
     {{-- ── HEADER ──────────────────────────────────────────── --}}
     <header class="lt-header">
-
-        {{-- Logo / Avatar --}}
         <div class="lt-logo-ring">
-            <img src="https://jagotes.s3.ap-southeast-1.amazonaws.com/images/logo+web.png"
-                alt="logo-jagotes"
-                loading="eager">
+            <img src="https://jagotes.s3.ap-southeast-1.amazonaws.com/images/logo+web.png" alt="logo-jagotes" loading="eager">
         </div>
-
-        {{-- Name & Tagline --}}
         <h1 class="lt-name">JAGOTES</h1>
-
         <p class="lt-tagline">Platform Tryout dan Bimbel CPNS, PPPK, SEKDIN, LPDP paling mirip dengan tes Asli</p>
-
-        
-
     </header>
 
     {{-- ── LINK CATEGORIES ─────────────────────────────────── --}}
     <main>
         @forelse($categories as $category)
-
             @if($category->links->isNotEmpty())
             <section class="lt-section" aria-labelledby="cat-{{ $category->id }}">
 
@@ -417,25 +335,20 @@
                 {{-- Links List --}}
                 <div class="lt-links">
                     @foreach($category->links->where('is_active', true)->sortBy('sort_order') as $link)
-                        <a href="{{ $link->url }}?code={{$profile->referral_code}}"
+                        <a href="{{ $link->url }}?code={{ $profile->referral_code }}"
                            class="lt-link-card lt-link-card--{{ strtolower($category->slug ?? 'other') }}"
                            target="{{ $link->open_in_new_tab ? '_blank' : '_self' }}"
                            rel="{{ $link->open_in_new_tab ? 'noopener noreferrer' : '' }}"
-                           {{-- Track click via data attribute for optional JS analytics --}}
                            data-link-id="{{ $link->id }}"
                            aria-label="{{ $link->title }}">
 
                             {{-- Thumbnail / Icon --}}
                             <div class="lt-thumb" aria-hidden="true">
                                 @if($link->thumbnail_url)
-                                    <img src="{{ $link->thumbnail_url }}"
-                                         alt=""
-                                         loading="lazy"
-                                         width="44" height="44">
+                                    <img src="{{ $link->thumbnail_url }}" alt="" loading="lazy" width="44" height="44">
                                 @elseif($link->icon_emoji)
                                     <span class="lt-thumb-icon">{{ $link->icon_emoji }}</span>
                                 @else
-                                    {{-- Default icon: external link --}}
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                          stroke="rgba(255,255,255,0.6)" stroke-width="2"
                                          stroke-linecap="round" stroke-linejoin="round">
@@ -467,7 +380,6 @@
 
             </section>
             @endif
-
         @empty
             <p style="text-align:center;color:var(--c-text-muted);padding:40px 0;font-size:14px;">
                 Belum ada link yang tersedia.
@@ -475,19 +387,62 @@
         @endforelse
     </main>
 
-    
-
 </div>
 
-{{-- Optional: click tracking (no library needed) --}}
+{{-- ── UNIFIED TRACKING SCRIPT (No Libraries Needed) ────── --}}
 <script>
-    document.querySelectorAll('[data-link-id]').forEach(function(el) {
-        el.addEventListener('click', function() {
-            var id = this.getAttribute('data-link-id');
-            // Fire-and-forget analytics ping
-            fetch('/linktree/track/' + id, { method: 'POST',
-                headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '' }
-            }).catch(function(){});
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Helper generator UUID untuk Client ID
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // 2. Cek status Unique Visitor (New vs Returning)
+        let visitorToken = localStorage.getItem('jg_tracker_id');
+        let isNew = 0;
+
+        if (!visitorToken) {
+            isNew = 1;
+            visitorToken = generateUUID();
+            localStorage.setItem('jg_tracker_id', visitorToken);
+        }
+
+        // Ambil data konseptual dari Laravel Backend
+        const trackingUrl = "{{ route('linktree.track') }}";
+        const affiliatorId = "{{ $profile->referral_code }}"; // Tipe text/varchar referral code
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
+        // ----------------------------------------------------
+        // EVENT 1: TRACK PAGE VIEW (Saat User Buka Halaman)
+        // ----------------------------------------------------
+        const pvData = new FormData();
+        pvData.append('affiliator_id', affiliatorId);
+        pvData.append('visitor_token', visitorToken);
+        pvData.append('is_new', isNew);
+        pvData.append('event_type', 'page_view');
+        pvData.append('_token', csrfToken); // Dikirimkan jika CSRF Middleware masih aktif
+
+        navigator.sendBeacon(trackingUrl, pvData);
+
+        // ----------------------------------------------------
+        // EVENT 2: TRACK LINK CLICKS (Setiap Kali Tombol Diklik)
+        // ----------------------------------------------------
+        document.querySelectorAll('.lt-link-card').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const clickData = new FormData();
+                clickData.append('affiliator_id', affiliatorId);
+                clickData.append('visitor_token', visitorToken);
+                clickData.append('is_new', isNew);
+                clickData.append('event_type', 'link_click');
+                clickData.append('link_url', this.href); // Mengambil value link asli tombol tujuan
+                clickData.append('_token', csrfToken);
+
+                navigator.sendBeacon(trackingUrl, clickData);
+            });
         });
     });
 </script>

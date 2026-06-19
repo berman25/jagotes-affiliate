@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/u/{referral_code}', [App\Http\Controllers\LinkTreeController::class, 'showPublicBiolink']);
-    
+Route::post('/biolink/track', [App\Http\Controllers\LinkTreeController::class, 'trackAnalytics'])->name('linktree.track');
+  
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
