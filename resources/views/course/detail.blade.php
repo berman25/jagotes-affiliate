@@ -2,9 +2,14 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('content')
 <div class="pagetitle">
-    <h1>Course Module</h1>    
+    <h1>Course Module</h1> 
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('/course/view/'.$course->tenant_id) }}">Detail Course</a></li>
+            <li class="breadcrumb-item active">{{ $course->title }}</li>
+        </ol>
+    </nav>   
 </div><!-- End Page Title -->
-<button class="btn btn-secondary mb-3" onclick="history.back()"><i class="bi bi-arrow-left-square"></i></button>
 
 <section class="section dashboard">
     <div class="row">
