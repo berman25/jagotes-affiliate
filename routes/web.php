@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CourseModuleDetailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,9 +73,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/course/module/update/{module_id}', [App\Http\Controllers\CourseController::class, 'moduleUpdate'])->name('course-module.update');
     Route::get('/course/quiz/view/{module_id}', [App\Http\Controllers\CourseQuizController::class, 'viewQuiz'])->name('course-quiz.view');
     
-    Route::get('/course/module-detail/view/{module_id}', [App\Http\Controllers\CourseModuleDetailController::class, 'view'])->name('course-module-detail.view');
-    Route::post('/course/module-detail/add', [App\Http\Controllers\CourseModuleDetailController::class, 'add'])->name('course-module-detail.add');
-    
+    Route::get('/course/module-detail/view/{module_id}', [CourseModuleDetailController::class, 'view'])->name('course-module-detail.view');
+    Route::post('/course/module-detail/add', [CourseModuleDetailController::class, 'add'])->name('course-module-detail.add');
+    Route::put('/course/module-detail/update/{id}', [CourseModuleDetailController::class, 'update'])->name('course-module-detail.update');
+    Route::delete('/course/module-detail/delete/{id}', [CourseModuleDetailController::class, 'delete'])->name('course-module-detail.delete');
+    Route::get('/course/module-detail/download/{id}', [CourseModuleDetailController::class, 'download'])->name('course-module-detail.download');
 
     Route::post('/course/quiz/create/{module_id}', [App\Http\Controllers\CourseQuizController::class, 'createQuiz'])->name('course-quiz.create');
 	Route::get('/course/quiz/show-question', [App\Http\Controllers\CourseQuizController::class, 'showQuestion'])->name('question.show');
