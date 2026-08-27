@@ -2,28 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Aws\S3\S3Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class CourseModuleDetailController extends Controller
 {
-    private const TABLE   = 'course_module_details';
-    private const MAX_KB  = 51200;
-    private const MIMES   = 'pdf,doc,docx,ppt,pptx,xls,xlsx,zip,mp4';
-
     public function view($module_id)
     {
         $module = \DB::table('course_modules')
             ->where('id', $module_id)
             ->first();
 
-        abort_if(!$module, 404);
-
-        $collection = \DB::table(self::TABLE)
+        $collection = \DB::table('course_module_details')
             ->where('module_id', $module_id)
-            ->orderBy('id')
             ->get();
 
         return view('course.module_detail')->with(compact('module', 'collection'));
@@ -31,162 +22,68 @@ class CourseModuleDetailController extends Controller
 
     public function add(Request $request)
     {
-        $data = $request->validate([
-            'module_id' => ['required', 'integer', 'exists:course_modules,id'],
-            'file'      => ['required', 'file', 'max:'.self::MAX_KB, 'mimes:'.self::MIMES],
-        ]);
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
+        $path = 'file/course/'.$request->module_id.'/'.$name;
 
-        $disk     = Storage::disk('s3');
-        $file     = $request->file('file');
-        $filename = $this->safeFilename($file->getClientOriginalName());
-        $key      = $this->buildKey((int) $data['module_id'], $filename);
+        \DB::table('course_module_details')
+            ->insert([
+                'name' => $name,
+                'module_type' => 'file',
+                'value' => $this->uploadFile($file, $path),
+                'module_id' => $request->module_id
+            ]);
 
-        $disk->putFileAs(
-            dirname($key),
-            $file,
-            basename($key),
-            ['ContentType' => $file->getMimeType()]
-        );
-
-        \DB::table(self::TABLE)->insert([
-            'name'        => basename($key),
-            'module_type' => 'file',
-            'value'       => $disk->url($key),
-            'module_id'   => $data['module_id'],
-            'created_at'  => now(),
-            'updated_at'  => now(),
-        ]);
-
-        return back()->with('success', 'File berhasil ditambahkan.');
+        return redirect()->back();
     }
 
     public function update(Request $request, $id)
     {
-        $detail = $this->findOrFail($id);
+        $detail = \DB::table('course_module_details')->where('id', $id)->first();
 
-        $request->validate([
-            'file' => ['required', 'file', 'max:'.self::MAX_KB, 'mimes:'.self::MIMES],
-        ]);
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
+        $path = 'file/course/'.$detail->module_id.'/'.$name;
 
-        $disk   = Storage::disk('s3');
-        $oldKey = $this->toKey($detail->value);
+        $this->deleteFile($detail->value);
 
-        $file     = $request->file('file');
-        $filename = $this->safeFilename($file->getClientOriginalName());
-        $key      = $this->buildKey((int) $detail->module_id, $filename);
-
-        $disk->putFileAs(
-            dirname($key),
-            $file,
-            basename($key),
-            ['ContentType' => $file->getMimeType()]
-        );
-
-        \DB::table(self::TABLE)
-            ->where('id', $detail->id)
+        \DB::table('course_module_details')
+            ->where('id', $id)
             ->update([
-                'name'       => basename($key),
-                'value'      => $disk->url($key),
-                'updated_at' => now(),
+                'name' => $name,
+                'value' => $this->uploadFile($file, $path)
             ]);
 
-        if ($oldKey && $oldKey !== $key) {
-            rescue(fn () => $disk->delete($oldKey));
-        }
-
-        return back()->with('success', 'File berhasil diperbarui.');
+        return redirect()->back();
     }
 
     public function delete($id)
     {
-        $detail = $this->findOrFail($id);
+        $detail = \DB::table('course_module_details')->where('id', $id)->first();
 
-        \DB::table(self::TABLE)->where('id', $detail->id)->delete();
+        $this->deleteFile($detail->value);
 
-        rescue(fn () => Storage::disk('s3')->delete($this->toKey($detail->value)));
+        \DB::table('course_module_details')->where('id', $id)->delete();
 
-        return back()->with('success', 'File berhasil dihapus.');
-    }
-
-    public function download($id)
-    {
-        $detail = $this->findOrFail($id);
-        $config = config('filesystems.disks.s3');
-
-        $client = new S3Client([
-            'version'     => 'latest',
-            'region'      => $config['region'],
-            'credentials' => [
-                'key'    => $config['key'],
-                'secret' => $config['secret'],
-            ],
-        ]);
-
-        $key = $this->toKey($detail->value);
-
-        $command = $client->getCommand('GetObject', [
-            'Bucket'                     => $config['bucket'],
-            'Key'                        => $key,
-            'ResponseContentDisposition' => 'inline; filename="'.basename($key).'"',
-            'ResponseContentType'        => 'application/pdf',
-        ]);
-
-        $url = (string) $client->createPresignedRequest($command, '+10 minutes')->getUri();
-
-        return redirect($url);
+        return redirect()->back();
     }
 
     public function uploadFile($file, $file_path)
     {
-        $path = Storage::disk('s3')->put($file_path, $file, 'public');
-        $path = Storage::disk('s3')->url($path);
-        return $path;
+        Storage::disk('s3')->putFileAs(dirname($file_path), $file, basename($file_path), 'public');
+
+        return Storage::disk('s3')->url($file_path);
     }
 
-    private function findOrFail($id)
+    public function deleteFile($url)
     {
-        $detail = \DB::table(self::TABLE)->where('id', $id)->first();
+        $key = ltrim(rawurldecode(parse_url($url, PHP_URL_PATH)), '/');
 
-        abort_if(!$detail, 404);
-
-        return $detail;
-    }
-
-    private function toKey(string $value): string
-    {
-        if (!Str::startsWith($value, ['http://', 'https://'])) {
-            return $value;
+        $bucket = config('filesystems.disks.s3.bucket');
+        if (str_starts_with($key, $bucket.'/')) {
+            $key = substr($key, strlen($bucket) + 1);
         }
 
-        return ltrim(rawurldecode(parse_url($value, PHP_URL_PATH)), '/');
-    }
-
-    private function safeFilename(string $original): string
-    {
-        $base = basename(str_replace('\\', '/', $original));
-        $base = preg_replace('/[\x00-\x1F\x7F"#%<>?\[\]\\\\^`{|}]+/u', '', $base);
-        $base = trim($base, " .\t\n");
-
-        $ext  = pathinfo($base, PATHINFO_EXTENSION);
-        $stem = mb_substr(pathinfo($base, PATHINFO_FILENAME), 0, 120) ?: 'file';
-
-        return $ext ? "{$stem}.{$ext}" : $stem;
-    }
-
-    private function buildKey(int $moduleId, string $filename): string
-    {
-        $disk = Storage::disk('s3');
-        $ext  = pathinfo($filename, PATHINFO_EXTENSION);
-        $stem = pathinfo($filename, PATHINFO_FILENAME);
-
-        $key = "file/course/{$moduleId}/{$filename}";
-        $i   = 1;
-
-        while ($disk->exists($key)) {
-            $key = "file/course/{$moduleId}/" . ($ext ? "{$stem}-{$i}.{$ext}" : "{$stem}-{$i}");
-            $i++;
-        }
-
-        return $key;
+        Storage::disk('s3')->delete($key);
     }
 }

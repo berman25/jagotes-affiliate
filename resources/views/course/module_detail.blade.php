@@ -48,10 +48,7 @@
                         @forelse ($collection as $item)
                             <tr>
                                 <td>
-                                    <a href="{{ route('course-module-detail.download', $item->id) }}"
-                                       target="_blank" rel="noopener">
-                                        {{ $item->name }}
-                                    </a>
+                                    <a href="{{ $item->value }}" target="_blank">{{ $item->name }}</a>
                                 </td>
                                 <td align="right" style="width:1px; white-space:nowrap;">
                                     <button type="button" class="btn btn-warning"

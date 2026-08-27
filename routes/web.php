@@ -77,8 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/course/module-detail/add', [CourseModuleDetailController::class, 'add'])->name('course-module-detail.add');
     Route::put('/course/module-detail/update/{id}', [CourseModuleDetailController::class, 'update'])->name('course-module-detail.update');
     Route::delete('/course/module-detail/delete/{id}', [CourseModuleDetailController::class, 'delete'])->name('course-module-detail.delete');
-    Route::get('/course/module-detail/download/{id}', [CourseModuleDetailController::class, 'download'])->name('course-module-detail.download');
-
+    
     Route::post('/course/quiz/create/{module_id}', [App\Http\Controllers\CourseQuizController::class, 'createQuiz'])->name('course-quiz.create');
 	Route::get('/course/quiz/show-question', [App\Http\Controllers\CourseQuizController::class, 'showQuestion'])->name('question.show');
     Route::put('/course/quiz/update-question', [App\Http\Controllers\CourseQuizController::class, 'updateQuestion'])->name('question.update');
