@@ -70,7 +70,7 @@ class CourseModuleDetailController extends Controller
 
     public function uploadFile($file, $file_path)
     {
-        Storage::disk('s3')->putFileAs(dirname($file_path), $file, basename($file_path), 'public');
+        Storage::disk('s3')->putFileAs(dirname($file_path), $file, basename($file_path), ['visibility' => 'public']);
 
         return Storage::disk('s3')->url($file_path);
     }
