@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Aws\S3\S3Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Aws\S3\S3Client;
 
 class CourseModuleDetailController extends Controller
 {
@@ -36,11 +36,12 @@ class CourseModuleDetailController extends Controller
             'file'      => ['required', 'file', 'max:'.self::MAX_KB, 'mimes:'.self::MIMES],
         ]);
 
+        $disk     = Storage::disk('s3');
         $file     = $request->file('file');
         $filename = $this->safeFilename($file->getClientOriginalName());
         $key      = $this->buildKey((int) $data['module_id'], $filename);
 
-        Storage::disk('s3')->putFileAs(
+        $disk->putFileAs(
             dirname($key),
             $file,
             basename($key),
@@ -50,7 +51,7 @@ class CourseModuleDetailController extends Controller
         \DB::table(self::TABLE)->insert([
             'name'        => basename($key),
             'module_type' => 'file',
-            'value'       => $key,
+            'value'       => $disk->url($key),
             'module_id'   => $data['module_id'],
             'created_at'  => now(),
             'updated_at'  => now(),
@@ -68,7 +69,7 @@ class CourseModuleDetailController extends Controller
         ]);
 
         $disk   = Storage::disk('s3');
-        $oldKey = $detail->value;
+        $oldKey = $this->toKey($detail->value);
 
         $file     = $request->file('file');
         $filename = $this->safeFilename($file->getClientOriginalName());
@@ -85,11 +86,11 @@ class CourseModuleDetailController extends Controller
             ->where('id', $detail->id)
             ->update([
                 'name'       => basename($key),
-                'value'      => $key,
+                'value'      => $disk->url($key),
                 'updated_at' => now(),
             ]);
 
-        if ($oldKey && $oldKey !== $key && !Str::startsWith($oldKey, ['http://', 'https://'])) {
+        if ($oldKey && $oldKey !== $key) {
             rescue(fn () => $disk->delete($oldKey));
         }
 
@@ -102,9 +103,7 @@ class CourseModuleDetailController extends Controller
 
         \DB::table(self::TABLE)->where('id', $detail->id)->delete();
 
-        if (!Str::startsWith($detail->value, ['http://', 'https://'])) {
-            rescue(fn () => Storage::disk('s3')->delete($detail->value));
-        }
+        rescue(fn () => Storage::disk('s3')->delete($this->toKey($detail->value)));
 
         return back()->with('success', 'File berhasil dihapus.');
     }
@@ -112,28 +111,23 @@ class CourseModuleDetailController extends Controller
     public function download($id)
     {
         $detail = $this->findOrFail($id);
-
-        if (Str::startsWith($detail->value, ['http://', 'https://'])) {
-            return redirect($detail->value);
-        }
-
         $config = config('filesystems.disks.s3');
 
         $client = new S3Client([
             'version'     => 'latest',
             'region'      => $config['region'],
-            'endpoint'    => $config['endpoint'] ?? null,
-            'use_path_style_endpoint' => $config['use_path_style_endpoint'] ?? false,
             'credentials' => [
                 'key'    => $config['key'],
                 'secret' => $config['secret'],
             ],
         ]);
 
+        $key = $this->toKey($detail->value);
+
         $command = $client->getCommand('GetObject', [
             'Bucket'                     => $config['bucket'],
-            'Key'                        => $detail->value,
-            'ResponseContentDisposition' => 'inline; filename="'.basename($detail->value).'"',
+            'Key'                        => $key,
+            'ResponseContentDisposition' => 'inline; filename="'.basename($key).'"',
             'ResponseContentType'        => 'application/pdf',
         ]);
 
@@ -156,6 +150,15 @@ class CourseModuleDetailController extends Controller
         abort_if(!$detail, 404);
 
         return $detail;
+    }
+
+    private function toKey(string $value): string
+    {
+        if (!Str::startsWith($value, ['http://', 'https://'])) {
+            return $value;
+        }
+
+        return ltrim(rawurldecode(parse_url($value, PHP_URL_PATH)), '/');
     }
 
     private function safeFilename(string $original): string
