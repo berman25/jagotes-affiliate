@@ -3,11 +3,14 @@
 @section('content')
 <div class="pagetitle">
     <h1>File Pendukung</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url()->previous() }}">Modul</a></li>
+            <li class="breadcrumb-item active">{{ $module->title }}</li>
+        </ol>
+    </nav>
 </div>
-
-<button class="btn btn-secondary mb-3" onclick="history.back()">
-    <i class="bi bi-arrow-left-square"></i>
-</button>
 
 @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
