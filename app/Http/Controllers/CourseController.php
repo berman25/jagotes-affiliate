@@ -69,7 +69,7 @@ class CourseController extends Controller
                 $join->on('p.instance_id', '=', 'courses.id');
             })
             ->where('courses.id', $course_id)
-            ->selectRaw('courses.id, courses.title')
+            ->selectRaw('courses.id, courses.title, tenant_id')
             ->first();
 
         $collection = \App\Models\CourseModule
